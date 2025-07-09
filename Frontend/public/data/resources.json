@@ -1,0 +1,152 @@
+[
+    {
+        "id": "res-1",  
+        "title": "What is Dyslexia? A Comprehensive Guide for Parents",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Dyslexia", "Understanding", "Parents"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/CCE5FF/007BFF?text=Dyslexia+Guide"
+    },
+    {
+        "id": "res-2",  
+        "title": "Early Signs of Dyslexia in Preschoolers: What to Look For",
+        "type": "Video",
+        "link": "#",
+        "tags": ["Dyslexia", "Early Signs", "Kids"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/FFDDC1/FF8C00?text=Early+Signs+Video"
+    },
+    {
+        "id": "res-3",  
+        "title": "Understanding Comorbidities: Dyslexia and ADHD",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Dyslexia", "ADHD", "Comorbidities"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/E0FFE0/008000?text=Comorbidities"
+    },
+    {
+        "id": "res-4",  
+        "title": "Debunking Common Myths About Dyslexia",
+        "type": "Video",
+        "link": "#",
+        "tags": ["Dyslexia", "Myths", "Awareness"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/FFF0CC/FFA500?text=Myths+Video"
+    },
+    {
+        "id": "res-5",  
+        "title": "Effective Strategies to Support Your Child with Dyslexia at Home",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Dyslexia", "Support", "Strategies", "Home"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/D1E7DD/28A745?text=Home+Support"
+    },
+    {
+        "id": "res-6",  
+        "title": "The Role of Multisensory Learning in Dyslexia Intervention",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Learning", "Intervention", "Multisensory"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/F0E6FA/8A2BE2?text=Multisensory"
+    },
+    {
+        "id": "res-7",  
+        "title": "Navigating the Diagnosis Process: A Parent's Handbook",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Diagnosis", "Parents", "Process"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/FFE6E6/DC3545?text=Diagnosis+Guide"
+    },
+    {
+        "id": "res-8",  
+        "title": "Empowering Your Child: Building Confidence and Self-Esteem",
+        "type": "Video",
+        "link": "#",
+        "tags": ["Empowerment", "Confidence", "Kids"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/E6F7FF/007BFF?text=Empowerment+Video"
+    },
+    {
+        "id": "res-9",  
+        "title": "Understanding Dysgraphia: Signs and Support Strategies",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Dysgraphia", "Support", "Strategies"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/F8F8F8/343A40?text=Dysgraphia+Help"
+    },
+    {
+        "id": "res-10", 
+        "title": "Dyscalculia Explained: Helping Kids with Math Difficulties",
+        "type": "Video",
+        "link": "#",
+        "tags": ["Dyscalculia", "Math", "Support"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/F0F8FF/6A5ACD?text=Math+Video"
+    },
+    {
+        "id": "res-11", 
+        "title": "Parenting a Child with Dyslexia: Emotional Support",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Parenting", "Emotional Support", "Dyslexia"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/E6FFFA/20C997?text=Emotional+Support"
+    },
+    {
+        "id": "res-12", 
+        "title": "Assistive Technology for Dyslexia: Tools and Apps",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Assistive Tech", "Tools", "Dyslexia"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/F3E5F5/9C27B0?text=Assistive+Tech"
+    },
+    {
+        "id": "res-13", 
+        "title": "Success Stories: Famous Dyslexics Who Thrived",
+        "type": "Video",
+        "link": "#",
+        "tags": ["Success Stories", "Inspiration", "Dyslexia"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/FFF3E0/FF9800?text=Success+Stories"
+    },
+    {
+        "id": "res-14", 
+        "title": "Homework Help: Making Learning Easier at Home",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Homework", "Learning", "Home"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/E8F5E9/4CAF50?text=Homework+Tips"
+    },
+    {
+        "id": "res-15",
+        "title": "Homework Help: Making Learning Easier at Home",
+        "type": "Article",
+        "link": "#",
+        "tags": ["Homework", "Learning", "Home"],
+        "upvotes": 0,
+        "userUpvoted": false,
+        "imageUrl": "https://placehold.co/400x200/E8F5E9/4CAF50?text=Homework+Tips"
+    }
+]
