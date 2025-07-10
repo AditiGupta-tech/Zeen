@@ -20,6 +20,7 @@ const getTherapistThemeClasses = (rating: number): { bg: string; border: string;
 const TherapistCard: React.FC<TherapistCardProps> = ({ therapist, isRecommended }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [hoveredTimeIndex, setHoveredTimeIndex] = useState<number | null>(null); 
 
   const theme = getTherapistThemeClasses(therapist.rating);
 
@@ -49,7 +50,7 @@ const TherapistCard: React.FC<TherapistCardProps> = ({ therapist, isRecommended 
       {therapist.image && (
         <img src={therapist.image} alt={therapist.name} className="w-full h-56 object-cover object-center" />
       )}
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="px-5 py-5 flex flex-col flex-grow">
         <h3 className="text-2xl font-bold text-gray-900 mb-2 leading-tight">{therapist.name}</h3>
         <div className="text-gray-700 text-sm mb-4 flex-grow">
           <p className="mb-1"><strong className="font-semibold">Experience:</strong> {therapist.experience} years</p>
@@ -74,13 +75,27 @@ const TherapistCard: React.FC<TherapistCardProps> = ({ therapist, isRecommended 
           <div className="flex flex-wrap gap-2">
             {therapist.availableAppointments.length > 0 ? (
               therapist.availableAppointments.map((time, index) => (
-                <button
+                <div
                   key={index}
-                  onClick={() => handleAppointmentClick(time)} 
-                  className="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
+                  className="relative" 
+                  onMouseEnter={() => setHoveredTimeIndex(index)}
+                  onMouseLeave={() => setHoveredTimeIndex(null)}
                 >
-                  {time}
-                </button>
+                  <button
+                    onClick={() => handleAppointmentClick(time)}
+                    className="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
+                  >
+                    {time}
+                  </button>
+                  {hoveredTimeIndex === index && (
+                    <div
+                      className="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 px-3 py-1 bg-gray-800 text-white text-xs rounded-md shadow-lg whitespace-nowrap z-20"
+                    >
+                      Click to book appointment
+                      <div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-0 h-0 border-x-4 border-x-transparent border-b-4 border-gray-800"></div> {/* Tooltip arrow */}
+                    </div>
+                  )}
+                </div>
               ))
             ) : (
               <span className="text-gray-500 text-sm italic">No appointments available.</span>
@@ -93,13 +108,13 @@ const TherapistCard: React.FC<TherapistCardProps> = ({ therapist, isRecommended 
           target="_blank"
           rel="noopener noreferrer"
           className="mt-auto block w-full text-center bg-purple-600 text-white py-2 px-4 rounded-md font-semibold
-                     hover:bg-purple-700 transition-colors duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                      hover:bg-purple-700 transition-colors duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
         >
           Visit Website
         </a>
       </div>
 
-      {isModalOpen && selectedTime && ( 
+      {isModalOpen && selectedTime && (
         <AppModal
           therapist={therapist}
           selectedTime={selectedTime}
