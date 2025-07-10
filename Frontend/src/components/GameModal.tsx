@@ -5,30 +5,11 @@ import { Mic } from "lucide-react";
 import { X, Volume2, Check, ArrowLeft, Paintbrush, Eraser, Redo2, Undo2 } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"; 
-import MemoryGameCard from './MemoryGameCard'; 
-import toast from 'react-hot-toast';
-
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 interface GameModalProps {
   gameType: string;
   onClose: () => void;
 }
-
-interface GameItemWithImage {
-  word: string;
-  image: string;
-}
-
-interface MemoryCard {
-  id: number;
-  value: string;
-  type: 'word' | 'image';
-  image?: string;
-  isMatched: boolean;
-  isSelected: boolean; 
-}
-
 
 const GameModal = ({ gameType, onClose }: GameModalProps) => {
   const [currentWord, setCurrentWord] = useState("");
@@ -48,17 +29,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
   const words = {
     spelling: ["CAT", "DOG", "BIRD", "FISH", "TREE"],
     pronunciation: ["WONDERFUL", "BEAUTIFUL", "AMAZING", "FANTASTIC", "BRILLIANT"],
-    confusion: ["BAD", "DAD", "BED", "DIG", "PIG"],
-    memoryMatchPairs: [
-      { word: "BALL", image: "/public/ball.jpg" },
-      { word: "HAT", image: "/public/hat.jpg" },
-      { word: "CAT", image: "/public/cat.jpg" },
-      { word: "FISH", image: "/public/fish.jpg" },
-      { word: "BOOK", image: "/public/book.png" }, // Add more pairs as needed
-      { word: "APPLE", image: "/public/apple.jpg" },
-      { word: "DOG", image: "/public/dog.jpg" },
-      { word: "MAN", image: "/public/man.jpg" }
-    ]
+    confusion: ["BAD", "DAD", "BED", "DIG", "PIG"]
   };
 
   const colorWords = [
@@ -327,8 +298,6 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
       return () => clearTimeout(timer);
     }
   }, [gameType, initializeCanvas]); 
-
-  
 
   const renderGame = () => {
     switch (gameType) {
@@ -622,7 +591,6 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
           </div>
         );
 
-        
 
       default:
         return (
