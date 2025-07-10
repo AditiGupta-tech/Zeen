@@ -69,6 +69,15 @@ const Games = () => {
       gameType: "art"
     },
     {
+      title: "Object Matching Game", 
+      description: "Find matching pairs of words and pictures to improve memory!", 
+      icon: "🧠", 
+      color: "from-indigo-200 to-indigo-300", 
+      textColor: "text-indigo-800",
+      difficulty: "Moderate", 
+      gameType: "memoryMatch" 
+    },
+    {
       title: "Body Movement Games",
       description: "Dance and move like animals while learning new concepts",
       icon: "💃",
