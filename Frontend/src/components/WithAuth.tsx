@@ -1,3 +1,6 @@
+import Events from './Events';
+import Therapies from './Therapies';
+
 interface WithAuthProps {
   onLogout: () => void;
 }
@@ -13,6 +16,8 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
       >
         Log Out
       </button>
+      <Therapies />
+      <Events/>
     </div>
   );
 }

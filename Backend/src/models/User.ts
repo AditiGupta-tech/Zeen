@@ -1,4 +1,3 @@
-
 import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -7,14 +6,15 @@ export interface IUser extends Document {
   password: string;
   relationToChild: string;
   childName: string;
-  childDob: string; 
+  childDob: Date;
+  gender?: string; 
   condition: string[];
   dyslexiaTypes: string[];
   otherConditionText?: string;
   severity: string;
   specifications?: string;
-  interests?: string[];
-  learningAreas?: string[];
+  interests: string[]; 
+  learningAreas: string[];
   learningGoals?: string;
   agreeToTerms: boolean;
   createdAt: Date;
@@ -27,13 +27,14 @@ const UserSchema: Schema = new Schema({
   password: { type: String, required: true },
   relationToChild: { type: String, required: true },
   childName: { type: String, required: true, trim: true },
-  childDob: { type: String, required: true },
+  childDob: { type: Date, required: true },
+  gender: { type: String, required: false }, 
   condition: { type: [String], default: [] },
   dyslexiaTypes: { type: [String], default: [] },
   otherConditionText: { type: String, default: '' },
   severity: { type: String, required: true },
   specifications: { type: String, default: '' },
-  interests: { type: [String], default: [] },
+  interests: { type: [String], default: [] }, 
   learningAreas: { type: [String], default: [] },
   learningGoals: { type: String, default: '' },
   agreeToTerms: { type: Boolean, required: true },

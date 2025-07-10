@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "groupName": "Dyslexia Warriors",
+    "description": "Support group for parents and kids dealing with dyslexia. Share stories, tips, and resources.",
+    "tags": ["dyslexia", "support", "reading"],
+    "membersCount": 150,
+    "createdBy": "meera.sharma",
+    "createdAt": "2024-11-10T09:15:00Z",
+    "messages": [
+      { "user": "rahul.p", "message": "Anyone tried colored overlays for reading?", "time": "2025-07-10T08:30:00Z" },
+      { "user": "neha.r", "message": "Yes! They helped my daughter a lot.", "time": "2025-07-10T08:35:00Z" }
+    ],
+    "isPrivate": false,
+    "coverImage": "/images/community/dyslexia.jpg"
+  },
+  {
+    "id": 2,
+    "groupName": "ADHD Champs",
+    "description": "A lively space to discuss ADHD strategies, routines, and experiences. Parents and kids welcome!",
+    "tags": ["adhd", "focus", "routine"],
+    "membersCount": 98,
+    "createdBy": "arjun.rao",
+    "createdAt": "2025-01-05T13:20:00Z",
+    "messages": [
+      { "user": "deepika.k", "message": "Time-blocking worked wonders for us!", "time": "2025-07-09T15:00:00Z" },
+      { "user": "ankit.j", "message": "Any app suggestions for task reminders?", "time": "2025-07-09T15:05:00Z" }
+    ],
+    "isPrivate": false,
+    "coverImage": "/images/community/adhd.jpg"
+  },
+  {
+    "id": 3,
+    "groupName": "Reading Rocks 📚",
+    "description": "Book lovers unite! Recommend age-friendly reads and phonics tools.",
+    "tags": ["books", "phonics", "language"],
+    "membersCount": 76,
+    "createdBy": "zoya.b",
+    "createdAt": "2024-09-20T10:00:00Z",
+    "messages": [
+      { "user": "zoya.b", "message": "New favorite: 'My Name is Brain Brian' 😄", "time": "2025-07-08T17:10:00Z" },
+      { "user": "vihaan.s", "message": "We just got that too. It’s great!", "time": "2025-07-08T17:12:00Z" }
+    ],
+    "isPrivate": false,
+    "coverImage": "/images/community/reading.jpg"
+  },
+  {
+    "id": 4,
+    "groupName": "Moms Who Care",
+    "description": "Empowering moms with special needs children. Let’s talk support systems, guilt, and self-care.",
+    "tags": ["moms", "caregiving", "support"],
+    "membersCount": 210,
+    "createdBy": "ruchi.m",
+    "createdAt": "2023-12-11T14:30:00Z",
+    "messages": [
+      { "user": "ruchi.m", "message": "Taking a break doesn’t make you a bad mom ❤️", "time": "2025-07-10T06:00:00Z" },
+      { "user": "sanya.n", "message": "That hit deep. Thank you.", "time": "2025-07-10T06:02:00Z" }
+    ],
+    "isPrivate": false,
+    "coverImage": "/images/community/moms.jpg"
+  },
+  {
+    "id": 5,
+    "groupName": "Zeen Book Club",
+    "description": "Monthly book club for parents & educators exploring inclusive education.",
+    "tags": ["books", "inclusion", "parents", "educators"],
+    "membersCount": 64,
+    "createdBy": "zeen_admin",
+    "createdAt": "2025-04-01T11:00:00Z",
+    "messages": [
+      { "user": "zeen_admin", "message": "July’s pick: 'Fish in a Tree'", "time": "2025-07-01T10:00:00Z" }
+    ],
+    "isPrivate": true,
+    "coverImage": "/images/community/bookclub.jpg"
+  },
+  {
+    "id": 6,
+    "groupName": "Inclusive Educators India",
+    "description": "Connect with like-minded educators working on neurodiverse-friendly classrooms.",
+    "tags": ["educators", "neurodiverse", "teaching"],
+    "membersCount": 132,
+    "createdBy": "nivedita.t",
+    "createdAt": "2024-03-15T09:00:00Z",
+    "messages": [
+      { "user": "nivedita.t", "message": "Anyone using visual timers in class?", "time": "2025-07-10T09:40:00Z" }
+    ],
+    "isPrivate": false,
+    "coverImage": "/images/community/educators.jpg"
+  },
+  {
+    "id": 7,
+    "groupName": "Speech Buddies",
+    "description": "Parents sharing experiences with speech delays, therapy tips, and progress wins!",
+    "tags": ["speech", "therapy", "language"],
+    "membersCount": 87,
+    "createdBy": "tanvi.g",
+    "createdAt": "2024-07-01T12:00:00Z",
+    "messages": [
+      { "user": "tanvi.g", "message": "After 6 months, he finally said ‘mama’ 😭", "time": "2025-07-08T09:00:00Z" }
+    ],
+    "isPrivate": false,
+    "coverImage": "/images/community/speech.jpg"
+  },
+  {
+    "id": 8,
+    "groupName": "Teen Talk Zone",
+    "description": "Teens navigating learning struggles — moderated space to rant, grow, and inspire.",
+    "tags": ["teens", "peer", "support"],
+    "membersCount": 45,
+    "createdBy": "zeen_team",
+    "createdAt": "2025-02-10T18:30:00Z",
+    "messages": [
+      { "user": "teen_user1", "message": "Anyone feel judged for using extra time in exams?", "time": "2025-07-09T20:10:00Z" }
+    ],
+    "isPrivate": true,
+    "coverImage": "/images/community/teen.jpg"
+  },
+  {
+    "id": 9,
+    "groupName": "Zeen Announcements 📢",
+    "description": "Official updates, feature launches, and feedback requests from the Zeen team.",
+    "tags": ["announcements", "updates", "official"],
+    "membersCount": 999,
+    "createdBy": "zeen_admin",
+    "createdAt": "2025-06-01T10:00:00Z",
+    "messages": [
+      { "user": "zeen_admin", "message": "Therapist booking is now live on the site! 🎉", "time": "2025-07-10T07:00:00Z" }
+    ],
+    "isPrivate": false,
+    "coverImage": "/images/community/announcements.jpg"
+  }
+]

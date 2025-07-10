@@ -1,0 +1,130 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Anjali Mehra",
+    "image": "/images/therapists/anjali.jpg",
+    "tags": ["Anxiety", "Adolescents", "CBT"],
+    "experience": 12,
+    "rating": 4.8,
+    "location": {
+      "city": "Delhi",
+      "state": "Delhi",
+      "latitude": 28.7041,
+      "longitude": 77.1025
+    },
+    "website": "https://anjalitherapy.in",
+    "availableAppointments": ["10:00 AM", "2:00 PM", "5:30 PM"]
+  },
+  {
+    "id": 2,
+    "name": "Dr. Rohan Shah",
+    "image": "/images/therapists/rohan.jpg",
+    "tags": ["Depression", "Men's Mental Health", "Mindfulness"],
+    "experience": 8,
+    "rating": 4.6,
+    "location": {
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "latitude": 19.0760,
+      "longitude": 72.8777
+    },
+    "website": "https://rohanmindclinic.com",
+    "availableAppointments": ["9:00 AM", "1:30 PM", "6:00 PM"]
+  },
+  {
+    "id": 3,
+    "name": "Dr. Priya Suresh",
+    "image": "/images/therapists/priya.jpg",
+    "tags": ["Child Therapy", "Autism", "Family Counseling"],
+    "experience": 15,
+    "rating": 4.9,
+    "location": {
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "latitude": 13.0827,
+      "longitude": 80.2707
+    },
+    "website": "https://priyacares.in",
+    "availableAppointments": ["11:00 AM", "3:00 PM", "7:00 PM"]
+  },
+  {
+    "id": 4,
+    "name": "Dr. Aman Varma",
+    "image": "/images/therapists/aman.jpg",
+    "tags": ["LGBTQ+", "Trauma", "Grief"],
+    "experience": 10,
+    "rating": 4.7,
+    "location": {
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "latitude": 12.9716,
+      "longitude": 77.5946
+    },
+    "website": "https://safeplacewithaman.com",
+    "availableAppointments": ["8:30 AM", "12:00 PM", "4:00 PM"]
+  },
+  {
+    "id": 5,
+    "name": "Dr. Neha Bhatia",
+    "image": "/images/therapists/neha.jpg",
+    "tags": ["OCD", "Teens", "Stress"],
+    "experience": 7,
+    "rating": 4.5,
+    "location": {
+      "city": "Pune",
+      "state": "Maharashtra",
+      "latitude": 18.5204,
+      "longitude": 73.8567
+    },
+    "website": "https://nehaminds.com",
+    "availableAppointments": ["10:15 AM", "2:45 PM", "6:30 PM"]
+  },
+  {
+    "id": 6,
+    "name": "Dr. Kabir Narang",
+    "image": "/images/therapists/kabir.jpg",
+    "tags": ["PTSD", "Veterans", "Addiction"],
+    "experience": 13,
+    "rating": 4.6,
+    "location": {
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "latitude": 17.3850,
+      "longitude": 78.4867
+    },
+    "website": "https://kabirmindhealth.com",
+    "availableAppointments": ["9:30 AM", "1:00 PM", "5:00 PM"]
+  },
+  {
+    "id": 7,
+    "name": "Dr. Sanya Kapoor",
+    "image": "/images/therapists/sanya.jpg",
+    "tags": ["Eating Disorders", "Self Esteem", "Teens"],
+    "experience": 9,
+    "rating": 4.7,
+    "location": {
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "latitude": 26.9124,
+      "longitude": 75.7873
+    },
+    "website": "https://sanyakapoortherapy.in",
+    "availableAppointments": ["11:45 AM", "3:30 PM", "7:15 PM"]
+  },
+  {
+    "id": 8,
+    "name": "Dr. Arjun Sen",
+    "image": "/images/therapists/arjun.jpg",
+    "tags": ["Work Burnout", "Career Counseling", "Anxiety"],
+    "experience": 11,
+    "rating": 4.8,
+    "location": {
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "latitude": 22.5726,
+      "longitude": 88.3639
+    },
+    "website": "https://arjunsenclinic.org",
+    "availableAppointments": ["9:00 AM", "12:30 PM", "4:45 PM"]
+  }
+]

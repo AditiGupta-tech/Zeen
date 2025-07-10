@@ -1,0 +1,191 @@
+[
+  {
+    "id": 1,
+    "title": "Read-Aloud Carnival",
+    "description": "Interactive storytelling and phonics games for young readers.",
+    "ageGroup": "6-9",
+    "location": {
+      "city": "Delhi",
+      "latitude": 28.6139,
+      "longitude": 77.2090,
+      "mapUrl": "https://maps.google.com/?q=India+Habitat+Centre"
+    },
+    "tags": ["reading", "storytelling", "language"],
+    "startDate": "2025-07-25",
+    "endDate": "2025-07-25",
+    "time": "10:00 AM - 1:00 PM",
+    "organizer": "Little Readers India",
+    "registrationLink": "https://bit.ly/read-aloud-carnival",
+    "themeColor": "yellow",
+    "recommended": true,
+    "image": "/images/events/reading-carnival.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Mini Bookworms Meetup",
+    "description": "Kids get to meet authors, draw book characters, and swap mini-books.",
+    "ageGroup": "7-10",
+    "location": {
+      "city": "Bangalore",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "mapUrl": "https://maps.google.com/?q=Cubbon+Park+Library"
+    },
+    "tags": ["reading", "art", "books"],
+    "startDate": "2025-08-10",
+    "endDate": "2025-08-10",
+    "time": "3:00 PM - 5:00 PM",
+    "organizer": "KidsLit Hub",
+    "registrationLink": "https://kidslit.in/mini-bookworms",
+    "themeColor": "yellow",
+    "recommended": true,
+    "image": "/images/events/bookworms.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Readathon Day",
+    "description": "An all-day cozy corner with bean bags and guided reading activities.",
+    "ageGroup": "5-8",
+    "location": {
+      "city": "Mumbai",
+      "latitude": 19.0760,
+      "longitude": 72.8777,
+      "mapUrl": "https://maps.google.com/?q=Kitab+Khana+Fort"
+    },
+    "tags": ["reading", "relaxation", "quiet-time"],
+    "startDate": "2025-08-05",
+    "endDate": "2025-08-05",
+    "time": "11:00 AM - 4:00 PM",
+    "organizer": "StoryNest",
+    "registrationLink": "https://storynest.org/readathon",
+    "themeColor": "orange",
+    "recommended": true,
+    "image": "/images/events/readathon.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Lego Brainstorm Battle",
+    "description": "Collaborative building tasks and puzzles using Lego blocks.",
+    "ageGroup": "6-9",
+    "location": {
+      "city": "Hyderabad",
+      "latitude": 17.3850,
+      "longitude": 78.4867,
+      "mapUrl": "https://maps.google.com/?q=Birla+Science+Museum"
+    },
+    "tags": ["stem", "lego", "teamwork"],
+    "startDate": "2025-07-20",
+    "endDate": "2025-07-20",
+    "time": "2:00 PM - 5:00 PM",
+    "organizer": "BuildIt Brains",
+    "registrationLink": "https://lego-event.builditbrains.com",
+    "themeColor": "blue",
+    "recommended": false,
+    "image": "/images/events/lego-battle.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Little Chefs Workshop",
+    "description": "A fun session where kids learn to make healthy snacks.",
+    "ageGroup": "5-7",
+    "location": {
+      "city": "Pune",
+      "latitude": 18.5204,
+      "longitude": 73.8567,
+      "mapUrl": "https://maps.google.com/?q=Phoenix+Market+City"
+    },
+    "tags": ["cooking", "fun", "healthy"],
+    "startDate": "2025-07-27",
+    "endDate": "2025-07-27",
+    "time": "11:30 AM - 1:30 PM",
+    "organizer": "MommyCooks",
+    "registrationLink": "https://mommycooks.in/littlechefs",
+    "themeColor": "green",
+    "recommended": false,
+    "image": "/images/events/little-chefs.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Junior Robotics Bootcamp",
+    "description": "Beginner robotics workshop with simple sensors and movement logic.",
+    "ageGroup": "8-11",
+    "location": {
+      "city": "Chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "mapUrl": "https://maps.google.com/?q=IIT+Madras+Research+Park"
+    },
+    "tags": ["robotics", "coding", "technology"],
+    "startDate": "2025-08-15",
+    "endDate": "2025-08-17",
+    "time": "9:00 AM - 12:30 PM",
+    "organizer": "STEMVerse",
+    "registrationLink": "https://stemverse.org/robotics-bootcamp",
+    "themeColor": "purple",
+    "recommended": false,
+    "image": "/images/events/robotics.jpg"
+  },
+  {
+    "id": 7,
+    "title": "Art & Expression Day",
+    "description": "Paint emotions and explore creativity with music, movement, and color.",
+    "ageGroup": "6-10",
+    "location": {
+      "city": "Jaipur",
+      "latitude": 26.9124,
+      "longitude": 75.7873,
+      "mapUrl": "https://maps.google.com/?q=Jawahar+Kala+Kendra"
+    },
+    "tags": ["art", "expression", "creativity"],
+    "startDate": "2025-07-22",
+    "endDate": "2025-07-22",
+    "time": "1:00 PM - 4:00 PM",
+    "organizer": "CreativeSoul",
+    "registrationLink": "https://creativesoul.in/artday",
+    "themeColor": "pink",
+    "recommended": false,
+    "image": "/images/events/art-expression.jpg"
+  },
+  {
+    "id": 8,
+    "title": "Young Explorers Science Fair",
+    "description": "Show-and-tell experiments by kids, plus live science shows.",
+    "ageGroup": "7-10",
+    "location": {
+      "city": "Ahmedabad",
+      "latitude": 23.0225,
+      "longitude": 72.5714,
+      "mapUrl": "https://maps.google.com/?q=Science+City"
+    },
+    "tags": ["science", "experiments", "learning"],
+    "startDate": "2025-08-03",
+    "endDate": "2025-08-03",
+    "time": "10:00 AM - 3:00 PM",
+    "organizer": "Explora Club",
+    "registrationLink": "https://exploraclub.org/sciencefair",
+    "themeColor": "cyan",
+    "recommended": false,
+    "image": "/images/events/science-fair.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Dance & Drama Fiesta",
+    "description": "Expressive arts and movement for self-confidence and social skills.",
+    "ageGroup": "5-9",
+    "location": {
+      "city": "Kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "mapUrl": "https://maps.google.com/?q=Kala+Kunj"
+    },
+    "tags": ["dance", "drama", "performance"],
+    "startDate": "2025-07-28",
+    "endDate": "2025-07-28",
+    "time": "4:00 PM - 6:00 PM",
+    "organizer": "StageStars",
+    "registrationLink": "https://stagestars.in/fiesta",
+    "themeColor": "red",
+    "recommended": false,
+    "image": "/images/events/drama-fiesta.jpg"
+  }
+]

@@ -1,37 +1,74 @@
 import express, { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import User from '../models/User'; 
+import authMiddleware from '../middleware/authMiddleware'; 
 
 const router = express.Router();
+interface AuthenticatedRequest extends Request {
+  user?: { id: string; email: string }; 
+}
 
 // Signup Route
 router.post('/signup', async (req: Request, res: Response) => {
   try {
-    const { name, email, password, childName, dob, gender } = req.body;
+    const {
+      email,
+      password,
+      relationToChild,
+      childName,
+      childDob, 
+      gender, 
+      condition,
+      dyslexiaTypes,
+      otherConditionText,
+      severity,
+      specifications,
+      interests,
+      learningAreas,
+      learningGoals,
+      agreeToTerms
+    } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: 'Email already registered' });
 
+    if (!email || !password || !relationToChild || !childName || !childDob || !severity || agreeToTerms === undefined) {
+        return res.status(400).json({ message: 'Missing required fields for signup.' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      name,
       email,
       password: hashedPassword,
-      child: { name: childName, dob, gender }
+      relationToChild,
+      childName,
+      childDob: new Date(childDob), 
+      gender: gender || '', 
+      condition: condition || [],
+      dyslexiaTypes: dyslexiaTypes || [],
+      otherConditionText: otherConditionText || '',
+      severity,
+      specifications: specifications || '',
+      interests: interests || [],
+      learningAreas: learningAreas || [],
+      learningGoals: learningGoals || '',
+      agreeToTerms,
     });
 
     await newUser.save();
 
-    const token = jwt.sign({ user: { id: newUser._id, email: newUser.email } }, process.env.JWT_SECRET!, {
-      expiresIn: '1d',
-    });
+    const token = jwt.sign(
+      { user: { id: newUser._id.toString(), email: newUser.email } }, 
+      process.env.JWT_SECRET!,
+      { expiresIn: '1d' }
+    );
 
     res.status(201).json({ message: 'Signup successful', token });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ message: 'Signup failed' });
+    res.status(500).json({ message: 'Signup failed', error: (error as Error).message });
   }
 });
 
@@ -46,18 +83,19 @@ router.post('/login', async (req: Request, res: Response) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
-    const token = jwt.sign({ user: { id: user._id, email: user.email } }, process.env.JWT_SECRET!, {
-      expiresIn: '1d',
-    });
+    const token = jwt.sign(
+      { user: { id: user._id.toString(), email: user.email } }, 
+      process.env.JWT_SECRET!,
+      { expiresIn: '1d' }
+    );
 
-    res.status(200).json({ message: 'Login successful', token });
+    res.status(200).json({ message: 'Login successful', token, user: { email: user.email, interests: user.interests } });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: 'Login failed' });
+    res.status(500).json({ message: 'Login failed', error: (error as Error).message });
   }
 });
 
-// Verify Token Route
 router.get('/verify', (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
 
@@ -79,6 +117,27 @@ router.get('/verify', (req: Request, res: Response) => {
   } catch (err) {
     console.error('Token verification failed:', err);
     res.status(401).json({ message: 'Invalid or expired token' });
+  }
+});
+
+router.get('/profile', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: 'User not authenticated or ID missing from token.' });
+    }
+
+    const user = await User.findById(req.user.id).select(
+      'email relationToChild childName childDob gender condition dyslexiaTypes otherConditionText severity specifications interests learningAreas learningGoals'
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User profile not found.' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ message: 'Failed to fetch user profile.', error: (error as Error).message });
   }
 });
 

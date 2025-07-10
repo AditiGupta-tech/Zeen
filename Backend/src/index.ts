@@ -1,8 +1,8 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express'; 
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { connectToDB } from './db';
-import authRoutes from './routes/auth';
+import authRoutes from './routes/auth'; 
 
 dotenv.config();
 
@@ -13,9 +13,13 @@ connectToDB();
 
 // Middleware
 app.use(express.json());
-app.use(cors()); // In prod, restrict to frontend domain
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
-// Routes
+// Routes e.g., /api/signup, /api/login, /api/profile
 app.use('/api', authRoutes);
 
 // Test Route
@@ -23,15 +27,15 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Zeen Backend API is running!');
 });
 
-// 404 Handler
-app.use((req, res) => {
+// 404 Handler (Middleware for routes not found)
+app.use((req: Request, res: Response) => {
   res.status(404).json({ message: 'Endpoint not found' });
 });
 
-// Global Error Handler
-app.use((err: any, req: Request, res: Response) => {
+// Global Error Handler (Middleware for handling errors)
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Something broke!' });
+  res.status(500).json({ message: 'Something broke!', error: err.message });
 });
 
 const PORT = process.env.PORT || 5000;
