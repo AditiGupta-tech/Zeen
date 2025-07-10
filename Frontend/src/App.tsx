@@ -11,13 +11,6 @@ import SignupPage from "./pages/Signup";
 import LoginPage from "./pages/Login";
 import ChildModePage from "./pages/Childmode";
 
-import { Toaster as ShadToaster } from "@/components/ui/toaster"; 
-import { Toaster as Sonner } from "@/components/ui/sonner";       
-import { Toaster as HotToaster } from "react-hot-toast";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
@@ -25,11 +18,7 @@ const App = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <HotToaster position="top-center" reverseOrder={false} />
-        <ShadToaster />
-        <Sonner />
+    
     <BrowserRouter>
       <main>
         <Routes>
@@ -46,8 +35,6 @@ const App = () => {
         </Routes>
       </main>
     </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
   );
 };
 
