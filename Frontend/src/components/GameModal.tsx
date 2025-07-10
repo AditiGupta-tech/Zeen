@@ -328,112 +328,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     }
   }, [gameType, initializeCanvas]); 
 
-  //Object Match Game
-  const shuffleArray = (array: any[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
-
-  const initializeMemoryMatchGame = useCallback(() => {
-  const pairs = words.memoryMatchPairs;
-  let newCards: MemoryCard[] = [];
-  let idCounter = 0;
-
-  pairs.forEach(pair => {
-    //Word
-    newCards.push({
-      id: idCounter++,
-      value: pair.word,
-      type: 'word',
-      isMatched: false,
-      isSelected: false
-    });
-    //Image
-    newCards.push({
-      id: idCounter++,
-      value: pair.word,
-      type: 'image',
-      image: pair.image,
-      isMatched: false,
-      isSelected: false
-    });
-  });
-
-  const shuffled = shuffleArray(newCards);
-  setCards(shuffled);
-  setMatchesFound(0);
-  setMoves(0);
-  setMemoryGameComplete(false);
-  playIshaan("Find the matching word and image pairs!");
-}, []);
-
-  const handleCardClick = useCallback((clickedCard: MemoryCard) => {
-  if (clickedCard.isMatched || clickedCard.isSelected) return;
-
-  const selectedCards = cards.filter(c => c.isSelected);
-
-  setCards(prev =>
-    prev.map(card =>
-      card.id === clickedCard.id ? { ...card, isSelected: true } : card
-    )
-  );
-
-  if (selectedCards.length === 1) {
-    const firstCard = selectedCards[0];
-
-    if (
-      firstCard.value === clickedCard.value &&
-      firstCard.type !== clickedCard.type
-    ) {
-      //Match
-      setTimeout(() => {
-        setCards(prev =>
-          prev.map(card =>
-            card.value === clickedCard.value
-              ? { ...card, isMatched: true, isSelected: false }
-              : card
-          )
-        );
-        setMatchesFound(prev => prev + 1);
-        playIshaan("Ekdum Jhakaas! Match found!");
-        toast.success("✅ Well done! Cards matched!");
-      }, 400);
-    } else {
-      //Not a match
-      setTimeout(() => {
-        setCards(prev =>
-          prev.map(card =>
-            card.id === firstCard.id || card.id === clickedCard.id
-              ? { ...card, isSelected: false }
-              : card
-          )
-        );
-        playIshaan("Oops! Try again!");
-        toast.error("❌ Oops! Try again!");
-      }, 800);
-    }
-
-    setMoves(prev => prev + 1);
-  }
-}, [cards]);
-
-  useEffect(() => {
-    if (gameType === "memoryMatch") {
-      initializeMemoryMatchGame();
-    }
-  }, [gameType, initializeMemoryMatchGame]);
-
-  useEffect(() => {
-  const allMatched = cards.length > 0 && cards.every(c => c.isMatched);
-  if (allMatched) {
-    setMemoryGameComplete(true);
-    setScore(prev => prev + 1);
-    playIshaan("Congratulations! You found all the pairs!");
-  }
-}, [cards]);
+  
 
   const renderGame = () => {
     switch (gameType) {
@@ -727,38 +622,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
           </div>
         );
 
-        case "memoryMatch":
-          return (
-            <div className="flex flex-col items-center">
-              <div className="text-2xl font-semibold mb-4">
-                Moves: {moves} | Matches: {matchesFound}/{words.memoryMatchPairs.length}
-              </div>
-
-              {memoryGameComplete && (
-                <div className="text-3xl font-bold text-green-600 mb-4 animate-bounce">
-                  Game Complete!
-                </div>
-              )}
-
-              <div className="grid grid-cols-4 gap-4 max-w-2xl w-full">
-                {cards.map((card) => (
-                  <MemoryGameCard
-                    key={card.id}
-                    card={card}
-                    onClick={handleCardClick}
-            
-                  />
-                ))}
-              </div>
-
-              <Button
-                onClick={initializeMemoryMatchGame}
-                className="mt-6 bg-purple-600 hover:bg-purple-700 text-white"
-              >
-                Play Again
-              </Button>
-            </div>
-          );
+        
 
       default:
         return (
