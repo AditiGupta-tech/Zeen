@@ -1,4 +1,3 @@
-
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -14,16 +13,17 @@ connectToDB();
 
 // Middleware
 app.use(express.json());
-app.use(cors()); // Later: restrict origin in prod
+app.use(cors()); // In prod, restrict to frontend domain
 
 // Routes
 app.use('/api', authRoutes);
 
+// Test Route
 app.get('/', (req: Request, res: Response) => {
   res.send('Zeen Backend API is running!');
 });
 
-// 404 Not Found
+// 404 Handler
 app.use((req, res) => {
   res.status(404).json({ message: 'Endpoint not found' });
 });

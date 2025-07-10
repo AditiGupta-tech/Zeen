@@ -233,60 +233,68 @@ export default function SignupPage() {
   };
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setAgreeToTermsError('');
+  e.preventDefault();
+  setLoading(true);
+  setError('');
+  setAgreeToTermsError('');
 
-    if (!form.agreeToTerms) {
-      setAgreeToTermsError('You must agree to the Terms and Privacy Policy to complete signup.');
-      setLoading(false);
-      return;
+  if (!form.agreeToTerms) {
+    setAgreeToTermsError('You must agree to the Terms and Privacy Policy to complete signup.');
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const dataToSubmit = {
+      email: form.email,
+      password: form.password,
+      relationToChild: form.relationToChild,
+      childName: form.childName,
+      childDob: form.childDob,
+      condition: form.condition,
+      dyslexiaTypes: form.dyslexiaTypes,
+      otherConditionText: form.otherConditionText,
+      severity: form.severity,
+      specifications: form.specifications,
+      interests: form.interests,
+      learningAreas: form.learningAreas,
+      learningGoals: form.learningGoals,
+      agreeToTerms: form.agreeToTerms
+    };
+
+    console.log('Sending signup data:', JSON.stringify(dataToSubmit, null, 2));
+
+    const response = await fetch('http://localhost:3000/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToSubmit),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Signup failed.');
     }
 
-    try {
-      const dataToSubmit = {
-        email: form.email,
-        password: form.password,
-        relationToChild: form.relationToChild,
-        childName: form.childName,
-        childDob: form.childDob,
-        condition: form.condition,
-        dyslexiaTypes: form.dyslexiaTypes,
-        otherConditionText: form.otherConditionText,
-        severity: form.severity,
-        specifications: form.specifications,
-        interests: form.interests,
-        learningAreas: form.learningAreas,
-        learningGoals: form.learningGoals,
-        agreeToTerms: form.agreeToTerms
-      };
+    console.log('Signup successful:', data);
 
-      console.log('Frontend Sending Data (without childAge):', JSON.stringify(dataToSubmit, null, 2));
-
-      const response = await fetch('http://localhost:3000/api/signup', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToSubmit),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Signup failed.');
-      }
-
-      console.log('User signed up successfully:', data);
-      navigate('/personalize'); 
-    } catch (err: any) {
-      console.error('Signup error:', err);
-      setError(err.message || 'Signup failed. Please try again.');
-    } finally {
-      setLoading(false);
+    if (data.token) {
+      localStorage.setItem('userToken', data.token);
     }
-  };
+
+    navigate('/personalize');
+    // window.location.reload();
+
+  } catch (err: any) {
+    console.error('Signup error:', err);
+    setError(err.message || 'Signup failed. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const inputClass = "w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-300 ease-in-out";
   const buttonClass = "w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-all duration-300 ease-in-out transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 shadow-md";
@@ -309,7 +317,7 @@ export default function SignupPage() {
               {[1, 2, 3, 4].map((stepNum, index) => (
                 <React.Fragment key={stepNum}>
                   <div key={`circle-${stepNum}`} className={`relative flex items-center justify-center w-8 h-8 rounded-full text-white font-bold transition-all duration-300 ease-in-out
-                    ${step > stepNum ? 'bg-green-500' : step === stepNum ? 'bg-purple-600' : 'bg-gray-300'}`}>
+                    ${step > stepNum ? 'bg-green-500' : step === stepNum ? 'bg-purple-800' : 'bg-gray-300'}`}>
                     {step > stepNum ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>

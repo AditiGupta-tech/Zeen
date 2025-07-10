@@ -1,158 +1,85 @@
-import { Router, Request, Response } from 'express';
-import User from '../models/User';
-import { body, validationResult } from 'express-validator';
+import express, { Request, Response } from 'express';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import User from '../models/User';
 
-dotenv.config();
-const router = Router();
+const router = express.Router();
 
-// POST /api/signup
-router.post(
-  '/signup',
-  [
-    body('email', 'Please include a valid email').isEmail(),
-    body('password', 'Password must be at least 6 characters').isLength({ min: 6 }),
-    body('relationToChild', 'Relation to child is required').notEmpty(),
-    body('childName', "Child's name is required").notEmpty(),
-    body('childDob', "Child's date of birth is required").notEmpty(),
-    body('condition', 'Please select at least one condition').isArray({ min: 1 }),
-    body('severity', 'Severity is required').notEmpty(),
-    body('agreeToTerms', 'You must agree to the Terms and Privacy Policy')
-      .isBoolean()
-      .custom(value => value === true),
-    body('otherConditionText').custom((value, { req }) => {
-      if (req.body.condition?.includes('Other') && !value) {
-        throw new Error("Please specify the 'Other' condition.");
-      }
-      return true;
-    }),
-  ],
-  async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+// Signup Route
+router.post('/signup', async (req: Request, res: Response) => {
+  try {
+    const { name, email, password, childName, dob, gender } = req.body;
 
-    const {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ message: 'Email already registered' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name,
       email,
-      password,
-      relationToChild,
-      childName,
-      childDob,
-      condition,
-      dyslexiaTypes,
-      otherConditionText,
-      severity,
-      specifications,
-      interests,
-      learningAreas,
-      learningGoals,
-      agreeToTerms,
-    } = req.body;
+      password: hashedPassword,
+      child: { name: childName, dob, gender }
+    });
 
-    try {
-      let user = await User.findOne({ email });
-      if (user) {
-        return res.status(400).json({ message: 'User already exists with this email.' });
-      }
+    await newUser.save();
 
-      user = new User({
-        email,
-        password,
-        relationToChild,
-        childName,
-        childDob,
-        condition,
-        dyslexiaTypes: dyslexiaTypes || [],
-        otherConditionText: otherConditionText || '',
-        severity,
-        specifications: specifications || '',
-        interests: interests || [],
-        learningAreas: learningAreas || [],
-        learningGoals: learningGoals || '',
-        agreeToTerms,
-      });
+    const token = jwt.sign({ user: { id: newUser._id, email: newUser.email } }, process.env.JWT_SECRET!, {
+      expiresIn: '1d',
+    });
 
-      await user.save();
-
-      const payload = { user: { id: user.id, email: user.email } };
-      const jwtSecret = process.env.JWT_SECRET;
-
-      if (!jwtSecret) {
-        console.error('JWT_SECRET is not defined!');
-        return res.status(500).send('Server Error: JWT secret missing.');
-      }
-
-      jwt.sign(
-        payload,
-        jwtSecret,
-        { expiresIn: '1h' },
-        (err, token) => {
-          if (err) throw err;
-          res.status(201).json({ message: 'User registered successfully!', token });
-        }
-      );
-
-    } catch (err: any) {
-      console.error(err.message);
-      if (err.code === 11000) {
-        return res.status(400).json({ message: 'A user with this email already exists.' });
-      }
-      res.status(500).send('Server Error');
-    }
+    res.status(201).json({ message: 'Signup successful', token });
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({ message: 'Signup failed' });
   }
-);
+});
 
-// POST /api/login
-router.post(
-  '/login',
-  [
-    body('email', 'Please include a valid email').isEmail(),
-    body('password', 'Password is required').notEmpty(),
-  ],
-  async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
+// Login Route
+router.post('/login', async (req: Request, res: Response) => {
+  try {
     const { email, password } = req.body;
 
-    try {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ message: 'Invalid Credentials' });
-      }
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: 'User not found' });
 
-      const isMatch = await user.comparePassword(password);
-      if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid Credentials' });
-      }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
-      const payload = { user: { id: user.id, email: user.email } };
-      const jwtSecret = process.env.JWT_SECRET;
+    const token = jwt.sign({ user: { id: user._id, email: user.email } }, process.env.JWT_SECRET!, {
+      expiresIn: '1d',
+    });
 
-      if (!jwtSecret) {
-        console.error("JWT_SECRET is not defined!");
-        return res.status(500).send('Server Error: JWT secret missing.');
-      }
-
-      jwt.sign(
-        payload,
-        jwtSecret,
-        { expiresIn: '1h' },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
-
-    } catch (err: any) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
+    res.status(200).json({ message: 'Login successful', token });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Login failed' });
   }
-);
+});
+
+// Verify Token Route
+router.get('/verify', (req: Request, res: Response) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
+    console.error('JWT_SECRET is not defined!');
+    return res.status(500).send('Server error: JWT secret missing');
+  }
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    res.status(200).json({ user: decoded });
+  } catch (err) {
+    console.error('Token verification failed:', err);
+    res.status(401).json({ message: 'Invalid or expired token' });
+  }
+});
 
 export default router;

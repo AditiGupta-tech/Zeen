@@ -61,9 +61,13 @@ export default function LoginPage() {
         throw new Error(data?.message || 'Login failed');
       }
 
-      localStorage.setItem('userToken', data.token);
+      localStorage.setItem('userToken', data.token); 
       setToast('Login successful! Redirecting...');
-      setTimeout(() => navigate('/personalize'), 1500);
+
+      setTimeout(() => {
+        navigate('/personalize'); 
+        window.location.reload(); 
+      }, 1200);
     } catch (err: any) {
       setErrors(prev => ({ ...prev, form: err.message || 'Login failed' }));
     } finally {
@@ -133,12 +137,12 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                 />
                 <button
-    type="button"
-    onClick={() => setShowPassword(prev => !prev)}
-    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-purple-600 font-bold hover:text-purple-800 focus:outline-none"
-  >
-    {showPassword ? "Hide" : "Show"}
-  </button>
+                  type="button"
+                  onClick={() => setShowPassword(prev => !prev)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-purple-600 font-bold hover:text-purple-800 focus:outline-none"
+                >
+                  {showPassword ? 'Hide' : 'Show'}
+                </button>
               </div>
               {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
             </div>

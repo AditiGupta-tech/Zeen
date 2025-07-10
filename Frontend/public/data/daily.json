@@ -1,0 +1,168 @@
+{
+  "schedule": {
+    "mild": {
+      "age_range": "4-12",
+      "daily_routine": [
+        { "time": "07:00", "activity": "Wake up, hygiene, and light stretching" },
+        { "time": "07:30", "activity": "Breakfast - high protein, low sugar" },
+        { "time": "08:00", "activity": "15 mins of Word Puzzle or Spelling Bee (5-7 questions)" },
+        { "time": "08:30", "activity": "School / Formal Learning (with teacher awareness)" },
+        { "time": "12:30", "activity": "Lunch + 20 min rest" },
+        { "time": "13:30", "activity": "Reading Practice (20 mins with audio support)" },
+        { "time": "14:00", "activity": "Maths Quiz (10 questions - simple + fun)" },
+        { "time": "14:30", "activity": "Break - Outdoor play (motor skill dev)" },
+        { "time": "15:30", "activity": "Games: Object Matching or Letter Sound Game (15 mins)" },
+        { "time": "16:00", "activity": "Snack time" },
+        { "time": "16:30", "activity": "Homework or Revision (with assistive tech)" },
+        { "time": "17:30", "activity": "Pronunciation practice using app/audio (10 words)" },
+        { "time": "18:00", "activity": "Relaxation - music / guided meditation (10 mins)" },
+        { "time": "18:30", "activity": "Dinner with family" },
+        { "time": "19:30", "activity": "Story time (audiobook or assisted reading - 15 mins)" },
+        { "time": "20:00", "activity": "Prepare for bed - brush, calm routine" },
+        { "time": "20:30", "activity": "Sleep" }
+      ],
+      "therapy_appointments": {
+        "speech_therapy": "Once per week (30 mins)",
+        "occupational_therapy": "Optional - motor skills if needed (bi-weekly)",
+        "counseling": "Only if anxiety or school distress present"
+      },
+      "game_recommendations": {
+        "pronunciation_game": "10 words/day",
+        "letter_confusion_game": "7 rounds/day",
+        "maths_quiz": "10 Qs/day",
+        "object_matching_game": "15 mins/day",
+        "spell_check_game": "5 words/day"
+      },
+      "school_customization": {
+        "teacher_support": "Allow oral answers, use visuals, extra time in class",
+        "tools_and_tech": ["Text-to-speech software", "Spell check extensions"]
+      }
+    },
+
+    "moderate": {
+      "age_range": "4-12",
+      "daily_routine": [
+        { "time": "07:00", "activity": "Wake up & sensory-friendly hygiene routine" },
+        { "time": "07:45", "activity": "Breakfast with verbal instructions" },
+        { "time": "08:15", "activity": "Pronunciation Game (3-5 words)" },
+        { "time": "08:30", "activity": "School / Special Ed sessions (1-on-1 or small group)" },
+        { "time": "12:30", "activity": "Lunch + 30 min rest (quiet zone)" },
+        { "time": "13:30", "activity": "Reading Practice (15 mins with visuals + phonics)" },
+        { "time": "14:00", "activity": "Letter Confusion Game (3 rounds)" },
+        { "time": "14:30", "activity": "Break - outdoor movement / sensory play" },
+        { "time": "15:30", "activity": "Maths Quiz (5 simple Qs with visual aid)" },
+        { "time": "16:00", "activity": "Snack + social chit-chat with family" },
+        { "time": "16:30", "activity": "Homework with support / tutoring (20 mins)" },
+        { "time": "17:00", "activity": "Games: Object Matching + Letter Sounds (15 mins)" },
+        { "time": "17:30", "activity": "Rest time / coloring / creative expression" },
+        { "time": "18:00", "activity": "Dinner with conversation prompts" },
+        { "time": "19:00", "activity": "Story time - 10 mins assisted or narrated" },
+        { "time": "19:30", "activity": "Calm-down routine: warm bath, soft lighting" },
+        { "time": "20:00", "activity": "Sleep" }
+      ],
+      "therapy_appointments": {
+        "speech_therapy": "2 times/week (30–45 mins)",
+        "occupational_therapy": "1–2 times/week (focus on fine motor & sensory)",
+        "counseling": "1 time/week (confidence building, frustration support)"
+      },
+      "game_recommendations": {
+        "pronunciation_game": "5 words/day",
+        "letter_confusion_game": "3 rounds/day",
+        "maths_quiz": "5 Qs/day",
+        "object_matching_game": "10 mins/day",
+        "spell_check_game": "2-3 words/day"
+      },
+      "school_customization": {
+        "teacher_support": "Use phonics-based materials, one instruction at a time",
+        "tools_and_tech": ["Phonics apps", "Tablet with audio books"]
+      }
+    },
+
+    "severe": {
+      "age_range": "4-12",
+      "daily_routine": [
+        { "time": "07:30", "activity": "Wake up with calm music & visual schedule" },
+        { "time": "08:00", "activity": "Hygiene routine with picture cues" },
+        { "time": "08:30", "activity": "Breakfast with one-step prompts" },
+        { "time": "09:00", "activity": "1 simple Word Game (1 word or sound)" },
+        { "time": "09:15", "activity": "Therapy session / Home Schooling (short bursts)" },
+        { "time": "11:00", "activity": "Break - tactile play or nature walk" },
+        { "time": "12:00", "activity": "Lunch with texture-friendly options" },
+        { "time": "12:45", "activity": "Rest - lying down or quiet music (30 mins)" },
+        { "time": "13:30", "activity": "Letter Matching / Phonics (5-10 mins only)" },
+        { "time": "14:00", "activity": "Maths Quiz (1–2 visual questions)" },
+        { "time": "14:30", "activity": "Break - water play / fidget tools" },
+        { "time": "15:30", "activity": "Story time with visuals (5 mins or 1 page)" },
+        { "time": "16:00", "activity": "Snack time + object naming game (2 items)" },
+        { "time": "16:30", "activity": "Rest or visual memory game (2–3 cards)" },
+        { "time": "17:00", "activity": "Therapy support or parent-child bonding activity" },
+        { "time": "18:00", "activity": "Dinner with visual food chart" },
+        { "time": "19:00", "activity": "Calming routine - soft toy, dim lights" },
+        { "time": "19:30", "activity": "Sleep" }
+      ],
+      "therapy_appointments": {
+        "speech_therapy": "3 times/week (30–45 mins)",
+        "occupational_therapy": "2–3 times/week (sensory integration + ADLs)",
+        "counseling": "2 times/week (emotional regulation, self-expression)"
+      },
+      "game_recommendations": {
+        "pronunciation_game": "1-2 words/day",
+        "letter_confusion_game": "1 round with visual support",
+        "maths_quiz": "1-2 Qs/day",
+        "object_matching_game": "5 mins/day",
+        "spell_check_game": "1 word with cue card"
+      },
+      "school_customization": {
+        "teacher_support": "1-on-1 learning support, visual timetables, minimal writing",
+        "tools_and_tech": ["AAC devices", "Pictogram cards", "Touch-screen learning"]
+      }
+    }
+  },
+
+  "common": {
+    "school_environment": {
+      "all_levels": [
+        "Dyslexia-friendly fonts (OpenDyslexic, Lexend)",
+        "Minimal distractions in classroom",
+        "Highlight keywords or use color coding in instructions",
+        "Seat child near teacher/front row"
+      ]
+    },
+    "parent_checklist": {
+      "daily": [
+        "Prepare child-friendly visual schedule",
+        "Pack high-protein, sensory-friendly snacks",
+        "Give verbal praise for small tasks completed",
+        "Check school bag and review teacher notes",
+        "Practice 1 game or task based on severity level",
+        "Ensure screen time is limited and learning-oriented",
+        "Read one story (assisted if needed)",
+        "Do calming activity before bed (soft lights, music)"
+      ],
+      "weekly": [
+        "Attend therapy sessions or track virtual progress",
+        "Talk to teachers for weekly update (email/chat)",
+        "Rotate learning materials (avoid boredom)",
+        "Reward good effort with something fun (not sugar!)",
+        "Tweak environment based on what’s working or not"
+      ],
+      "monthly": [
+        "Review overall progress and adjust games/tasks",
+        "Check if therapy frequency or learning goals need change",
+        "Attend parent support group (online/in-person)",
+        "Update doctor if meds or support devices are being used"
+      ]
+    },
+    "additional_notes": {
+      "nutrition_tip": "High-protein breakfast, avoid artificial colors/flavors",
+      "tech_support": "Tablets with stylus for writing practice, TTS/STS tools",
+      "motivation": "Use sticker chart or 'effort points' leaderboard at home",
+      "emotional_support": "Let child vent — listen without correcting grammar!",
+      "warning_signs": [
+        "Avoidance of reading even with help",
+        "Low self-esteem, saying 'I’m dumb'",
+        "Physical complaints before school (may signal anxiety)"
+      ]
+    }
+  }
+}

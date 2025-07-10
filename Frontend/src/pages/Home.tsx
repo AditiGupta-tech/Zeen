@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navigation from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChatbotIcon from "../components/Chatboticon";
@@ -8,25 +8,21 @@ import ProgressSection from "../components/Progress";
 import AuthSection from "../components/Auth";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
-import { ArrowRight, Mic, Volume2 } from "lucide-react";
+import { ArrowRight, Mic } from "lucide-react";
 
 const Home = () => {
-  const [isVoiceActive, setIsVoiceActive] = useState(false);
+
+  const navigate = useNavigate();
+
+const handleNavigate = () => {
+  navigate("/personalize");
+};
 
   const handleStartJourney = () => {
     document.getElementById("games")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleVoiceNavigation = () => {
-    setIsVoiceActive((prev) => !prev);
-    if (!isVoiceActive) {
-      alert("🎙️ Voice navigation activated! Say 'Hello Ishaan' to start!");
-    } else {
-      alert("🔇 Voice navigation deactivated.");
-    }
-  };
-
-  const features = [
+const features = [
     {
       title: "Voice First Navigation",
       description: "Navigate through the app using your voice with Ishaan's friendly guidance",
@@ -119,16 +115,13 @@ const Home = () => {
                 Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button
-                size="lg"
-                variant="outline"
-                onClick={handleVoiceNavigation}
-                className={`border-2 border-blue-500 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 btn-magical ${
-                  isVoiceActive ? "bg-blue-100 pulse-glow" : ""
-                }`}
-              >
-                <Volume2 className="mr-2 h-5 w-5" />
-                {isVoiceActive ? "Voice Active" : "Voice Navigation"}
-              </Button>
+      size="lg"
+      variant="outline"
+      onClick={handleNavigate}
+      className={`border-2 border-blue-500 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 btn-magical `  }
+    >
+      Personalize Your Experience <ArrowRight className="ml-2 h-5 w-5" />
+    </Button>
             </div>
           </div>
 
