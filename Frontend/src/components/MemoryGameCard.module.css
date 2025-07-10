@@ -1,0 +1,24 @@
+.card {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 0.5rem;
+  background-color: #dbeafe; /* Tailwind blue-100 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.25rem;
+  transition: background-color 0.3s, opacity 0.3s;
+}
+
+@media (min-width: 640px) {
+  .card {
+    width: 8rem;
+    height: 8rem;
+  }
+}
+
+.selected {
+  background-color: #60a5fa; /* Tailwind blue-400 */
+}
