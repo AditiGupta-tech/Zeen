@@ -80,6 +80,10 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        bounceCustom: {
+          '0%, 100%': { transform: 'translateY(-10%)' },
+          '50%': { transform: 'translateY(0)' },
+        },
         "fade-in": {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
@@ -102,6 +106,7 @@ const config: Config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'bounce-custom': 'bounceCustom 0.8s infinite',
         "fade-in": "fade-in 0.6s ease-out",
         "scale-in": "scale-in 0.4s ease-out",
         blob: "blob 7s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045)",

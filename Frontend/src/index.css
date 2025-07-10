@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {
   :root {
@@ -98,7 +97,6 @@
     overflow-x: hidden;
   }
 
-  /* Dyslexia-friendly font styling */
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0.05em;
     line-height: 1.4;
@@ -109,7 +107,6 @@
     word-spacing: 0.1em;
   }
 
-  /* Animated Background Effects */
   .animated-bg {
     position: relative;
     overflow: hidden;
@@ -134,7 +131,6 @@
     100% { background-position: 0% 50%; }
   }
 
-  /* Floating Stars Animation */
   .stars {
     position: absolute;
     width: 100%;
@@ -163,7 +159,6 @@
     50% { opacity: 1; transform: scale(1.2); }
   }
 
-  /* Floating elements */
   .floating {
     animation: float 6s ease-in-out infinite;
   }
@@ -181,12 +176,10 @@
     }
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Paper plane animation */
   .paper-plane {
     position: absolute;
     animation: fly 20s linear infinite;
@@ -211,12 +204,10 @@
     }
   }
 
-  /* Enhanced accessibility for dyslexic users */
   button, input, select, textarea {
     letter-spacing: 0.03em;
   }
 
-  /* Focus indicators for better navigation */
   button:focus, 
   a:focus, 
   input:focus, 
@@ -226,7 +217,6 @@
     outline-offset: 2px;
   }
 
-  /* Pulse animation for interactive elements */
   .pulse-glow {
     animation: pulseGlow 2s ease-in-out infinite;
   }
@@ -240,7 +230,6 @@
     }
   }
 
-  /* Button hover effects */
   .btn-magical {
     position: relative;
     overflow: hidden;
@@ -296,7 +285,7 @@
   animation: blob 7s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
-@keyframes pulseLight { /* New animation for card hover */
+@keyframes pulseLight { 
     0% { transform: scale(1); opacity: 0.2; }
     50% { transform: scale(1.05); opacity: 0.4; }
     100% { transform: scale(1); opacity: 0.2; }
@@ -305,27 +294,48 @@
     animation: pulseLight 1.5s infinite ease-in-out;
 }
 
-/* Custom Scrollbar Styles */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 8px; 
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f0f0f0; /* Color of the tracking area */
+  background: #f0f0f0; 
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #cbd5e1; /* Color of the scroll thumb (gray-300) */
+  background: #cbd5e1; 
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8; /* Color of the scroll thumb on hover (gray-400) */
+  background: #94a3b8; 
 }
 
-/* For Firefox */
 .custom-scrollbar {
-  scrollbar-width: thin; /* "auto" or "thin" */
-  scrollbar-color: #cbd5e1 #f0f0f0; /* thumb color track color */
+  scrollbar-width: thin; 
+  scrollbar-color: #cbd5e1 #f0f0f0; 
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
