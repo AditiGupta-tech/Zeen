@@ -17,7 +17,7 @@ interface FormData {
   interests: string[];
   learningAreas: string[];
   learningGoals: string;
-  agreeToTerms: boolean; 
+  agreeToTerms: boolean;
 }
 
 const relationOptions = ["Parent", "Guardian", "Therapist", "Educator", "Other"];
@@ -61,7 +61,7 @@ export default function SignupPage() {
     interests: [],
     learningAreas: [],
     learningGoals: '',
-    agreeToTerms: false,         
+    agreeToTerms: false,
   });
 
   const [calculatedChildAge, setCalculatedChildAge] = useState<string>('');
@@ -112,6 +112,7 @@ export default function SignupPage() {
     if (name === 'childDob') setChildDobError('');
     if (name === 'severity') setSeverityError('');
     if (name === 'agreeToTerms') setAgreeToTermsError('');
+    setError('');
   };
 
   const handleConditionToggle = (condition: string) => {
@@ -121,7 +122,7 @@ export default function SignupPage() {
         : [...prev.condition, condition];
       return { ...prev, condition: updatedConditions };
     });
-    setConditionError('');
+    setConditionError(''); 
   };
 
   const handleDyslexiaTypeToggle = (type: string) => {
@@ -153,6 +154,9 @@ export default function SignupPage() {
       if (!form.email) {
         setEmailError('Email is required.');
         hasError = true;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+        setEmailError('Invalid email format.');
+        hasError = true;
       } else {
         setEmailError('');
       }
@@ -171,7 +175,10 @@ export default function SignupPage() {
       } else {
         setRelationError('');
       }
-      if (hasError) return;
+      if (hasError) {
+          setError('Please correct the errors in Step 1 to proceed.');
+          return;
+      }
     }
 
     if (step === 2) {
@@ -191,7 +198,11 @@ export default function SignupPage() {
       if (form.condition.length === 0) {
         setConditionError("Please select at least one condition.");
         hasError = true;
-      } else {
+      } else if (form.condition.includes("Other") && !form.otherConditionText.trim()) {
+        setConditionError("Please describe the 'Other' condition.");
+        hasError = true;
+      }
+      else {
         setConditionError('');
       }
       if (!form.severity) {
@@ -200,19 +211,9 @@ export default function SignupPage() {
       } else {
         setSeverityError('');
       }
-      if (form.condition.includes("Other") && !form.otherConditionText) {
-        setConditionError("Please describe the 'Other' condition.");
-        hasError = true;
-      }
-      if (hasError) return;
-    }
-
-    if (step === 4) {
-      if (!form.agreeToTerms) {
-        setAgreeToTermsError('You must agree to the Terms and Privacy Policy.');
-        return;
-      } else {
-        setAgreeToTermsError('');
+      if (hasError) {
+          setError('Please correct the errors in Step 2 to proceed.');
+          return;
       }
     }
 
@@ -220,7 +221,7 @@ export default function SignupPage() {
   };
 
   const prevStep = () => {
-    setError(''); 
+    setError('');
     setEmailError('');
     setPasswordError('');
     setRelationError('');
@@ -233,67 +234,74 @@ export default function SignupPage() {
   };
 
   const handleSignup = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
-  setError('');
-  setAgreeToTermsError('');
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setAgreeToTermsError('');
 
-  if (!form.agreeToTerms) {
-    setAgreeToTermsError('You must agree to the Terms and Privacy Policy to complete signup.');
-    setLoading(false);
-    return;
-  }
-
-  try {
-    const dataToSubmit = {
-      email: form.email,
-      password: form.password,
-      relationToChild: form.relationToChild,
-      childName: form.childName,
-      childDob: form.childDob,
-      condition: form.condition,
-      dyslexiaTypes: form.dyslexiaTypes,
-      otherConditionText: form.otherConditionText,
-      severity: form.severity,
-      specifications: form.specifications,
-      interests: form.interests,
-      learningAreas: form.learningAreas,
-      learningGoals: form.learningGoals,
-      agreeToTerms: form.agreeToTerms
-    };
-
-    console.log('Sending signup data:', JSON.stringify(dataToSubmit, null, 2));
-
-    const response = await fetch('http://localhost:3000/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataToSubmit),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Signup failed.');
+    if (step === 4) {
+        if (!form.agreeToTerms) {
+            setAgreeToTermsError('You must agree to the Terms and Privacy Policy to complete signup.');
+            setLoading(false);
+            setError('Please agree to the Terms and Privacy Policy.'); 
+            return;
+        }
     }
 
-    console.log('Signup successful:', data);
+    try {
+      const dataToSubmit = {
+        email: form.email,
+        password: form.password,
+        relationToChild: form.relationToChild,
+        childName: form.childName,
+        childDob: form.childDob,
+        condition: form.condition,
+        dyslexiaTypes: form.condition.includes("Dyslexia") ? form.dyslexiaTypes : [],
+        otherConditionText: form.condition.includes("Other") ? form.otherConditionText : '',
+        severity: form.severity,
+        specifications: form.specifications,
+        interests: form.interests,
+        learningAreas: form.learningAreas,
+        learningGoals: form.learningGoals,
+        agreeToTerms: form.agreeToTerms
+      };
 
-    if (data.token) {
-      localStorage.setItem('userToken', data.token);
+      console.log('Sending signup data:', JSON.stringify(dataToSubmit, null, 2));
+
+      const response = await fetch('http://localhost:3000/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSubmit),
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        throw new Error(`Server responded with status ${response.status}, but no valid JSON. Please try again.`);
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Signup failed.');
+      }
+
+      console.log('Signup successful:', data);
+
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+
+      navigate('/personalize');
+
+    } catch (err: any) {
+      console.error('Signup error:', err);
+      setError(err.message || 'Signup failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
-
-    navigate('/personalize');
-    // window.location.reload();
-
-  } catch (err: any) {
-    console.error('Signup error:', err);
-    setError(err.message || 'Signup failed. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
 
   const inputClass = "w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-300 ease-in-out";
@@ -368,24 +376,24 @@ export default function SignupPage() {
                   <div>
                     <label htmlFor="password" className="block text-sm font-medium text-indigo-700 mb-1">Password</label>
                     <div className="relative">
-  <input
-    type={showPassword ? "text" : "password"}
-    id="password"
-    name="password"
-    value={form.password}
-    placeholder="Create a secure password"
-    className={`${inputClass} pr-12`}
-    onChange={handleChange}
-    required
-  />
-  <button
-    type="button"
-    onClick={() => setShowPassword(prev => !prev)}
-    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-purple-600 font-bold hover:text-purple-800 focus:outline-none"
-  >
-    {showPassword ? "Hide" : "Show"}
-  </button>
-</div>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        value={form.password}
+                        placeholder="Create a secure password"
+                        className={`${inputClass} pr-12`}
+                        onChange={handleChange}
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(prev => !prev)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-purple-600 font-bold hover:text-purple-800 focus:outline-none"
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
 
                     <p className="text-xs text-gray-500 mt-1">Must be at least 6 characters</p>
                     {passwordError && <p className="text-red-500 text-xs italic mt-1">{passwordError}</p>}
