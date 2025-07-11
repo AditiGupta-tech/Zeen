@@ -5,6 +5,16 @@ import { Mic } from "lucide-react";
 import { X, Volume2, Check, ArrowLeft, Paintbrush, Eraser, Redo2, Undo2 } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
+declare global {
+  interface Window {
+    webkitSpeechRecognition: any;
+    SpeechRecognition: any;
+  }
+
+  interface SpeechRecognitionEvent extends Event {
+    results: SpeechRecognitionResultList;
+  }
+}
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 interface GameModalProps {
   gameType: string;
