@@ -26,10 +26,36 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
   const [history, setHistory] = useState<ImageData[]>([]); 
   const [historyIndex, setHistoryIndex] = useState(-1);
 
+  const [cards, setCards] = useState<MemoryCard[]>([]);
+  const [matchesFound, setMatchesFound] = useState(0);
+  const [moves, setMoves] = useState(0);
+  const [memoryGameComplete, setMemoryGameComplete] = useState(false); 
+
+  const [gameMessage, setGameMessage] = useState<{
+    text: string;
+    type: 'success' | 'error' | null;
+  }>({ text: '', type: null });
+
+  const showGameMessage = (text: string, type: 'success' | 'error') => {
+  setGameMessage({ text, type });
+  setTimeout(() => {
+    setGameMessage({ text: '', type: null });
+  }, 2000);
+
   const words = {
     spelling: ["CAT", "DOG", "BIRD", "FISH", "TREE"],
     pronunciation: ["WONDERFUL", "BEAUTIFUL", "AMAZING", "FANTASTIC", "BRILLIANT"],
-    confusion: ["BAD", "DAD", "BED", "DIG", "PIG"]
+    confusion: ["BAD", "DAD", "BED", "DIG", "PIG"],
+    memoryMatchPairs: [
+      { word: "BALL", image: "/public/ball.jpg" },
+      { word: "HAT", image: "/public/hat.jpg" },
+      { word: "CAT", image: "/public/cat.jpg" },
+      { word: "FISH", image: "/public/fish.jpg" },
+      { word: "BOOK", image: "/public/book.png" }, 
+      { word: "APPLE", image: "/public/apple.jpg" },
+      { word: "DOG", image: "/public/dog.jpg" },
+      { word: "MAN", image: "/public/man.jpg" }
+    ]
   };
 
   const colorWords = [
@@ -298,6 +324,96 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
       return () => clearTimeout(timer);
     }
   }, [gameType, initializeCanvas]); 
+
+  //Object matching game
+  const shuffleArray = (array: any[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const initializeMemoryMatchGame = useCallback(() => {
+  const pairs = words.memoryMatchPairs;
+  let newCards: MemoryCard[] = [];
+  let idCounter = 0;
+
+  pairs.forEach(pair => {
+    newCards.push({
+      id: idCounter++,
+      value: pair.word,
+      type: 'word',
+      isMatched: false,
+      isSelected: false
+    });
+    newCards.push({
+      id: idCounter++,
+      value: pair.word,
+      type: 'image',
+      image: pair.image,
+      isMatched: false,
+      isSelected: false
+    });
+  });
+
+  const shuffled = shuffleArray(newCards);
+  setCards(shuffled);
+  setMatchesFound(0);
+  setMoves(0);
+  setMemoryGameComplete(false);
+  playIshaan("Find the matching word and image pairs!");
+}, []);
+
+  const handleCardClick = useCallback((clickedCard: MemoryCard) => {
+  if (clickedCard.isMatched || clickedCard.isSelected) return;
+
+  const selectedCards = cards.filter(c => c.isSelected);
+
+  setCards(prev =>
+    prev.map(card =>
+      card.id === clickedCard.id ? { ...card, isSelected: true } : card
+    )
+  );
+
+  if (selectedCards.length === 1) {
+    const firstCard = selectedCards[0];
+
+    if (
+      firstCard.value === clickedCard.value &&
+      firstCard.type !== clickedCard.type
+    ) {
+      
+      setTimeout(() => {
+        setCards(prev =>
+          prev.map(card =>
+            card.value === clickedCard.value
+              ? { ...card, isMatched: true, isSelected: false }
+              : card
+          )
+        );
+        setMatchesFound(prev => prev + 1);
+        playIshaan("Ekdum Jhakaas! Match found!");
+        showGameMessage("✅ Well done! Cards matched!", "success");
+      }, 400);
+    } else {
+      
+      setTimeout(() => {
+        setCards(prev =>
+          prev.map(card =>
+            card.id === firstCard.id || card.id === clickedCard.id
+              ? { ...card, isSelected: false }
+              : card
+          )
+        );
+        playIshaan("Oops! Try again!");
+        showGameMessage("❌ Oops! Try again!", "error");
+      }, 800);
+    }
+
+    setMoves(prev => prev + 1);
+  }
+}, [cards]);
 
   const renderGame = () => {
     switch (gameType) {
@@ -590,6 +706,51 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
             </div>
           </div>
         );
+
+        case "memoryMatch":
+          return (
+            <div className="flex flex-col items-center">
+              <div className="text-2xl font-semibold mb-4">
+                Moves: {moves} | Matches: {matchesFound}/{words.memoryMatchPairs.length}
+              </div>
+
+              {memoryGameComplete && (
+                <div className="text-3xl font-bold text-green-600 mb-4 animate-bounce">
+                  Game Complete!
+                </div>
+              )}
+
+              {gameMessage.type && (
+                <div
+                  className={`px-4 py-2 mb-4 rounded-lg text-white font-semibold transition-opacity duration-300 ${
+                    gameMessage.type === 'success'
+                      ? 'bg-green-500/80'
+                      : 'bg-red-500/80'
+                  }`}
+                >
+                  {gameMessage.text}
+                </div>
+              )}
+
+              <div className="grid grid-cols-4 gap-4 max-w-2xl w-full">
+                {cards.map((card) => (
+                  <MemoryGameCard
+                    key={card.id}
+                    card={card}
+                    onClick={handleCardClick}
+                  />
+                ))}
+              </div>
+
+              <Button
+                onClick={initializeMemoryMatchGame}
+                className="mt-6 bg-purple-600 hover:bg-purple-700 text-white"
+              >
+                Play Again
+              </Button>
+            </div>
+
+          );
 
 
       default:
