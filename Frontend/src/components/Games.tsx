@@ -69,6 +69,15 @@ const Games = () => {
       gameType: "art"
     },
     {
+      title: "Maths Quiz",
+      description: "Solve fun and quick math problems!",
+      icon: "➕",
+      color: "from-indigo-200 to-indigo-300",
+      textColor: "text-indigo-800",
+      difficulty: "Logical",
+      gameType: "math"
+    },
+    {
       title: "Body Movement Games",
       description: "Dance and move like animals while learning new concepts",
       icon: "💃",

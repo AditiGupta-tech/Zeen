@@ -118,7 +118,19 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     if (gameType === "colorConfusion") {
       const correctColorName = colorWords.find(color => color.hex === displayedColor)?.name;
       correct = userInput.toUpperCase() === correctColorName;
-    } else {
+    }else if (gameType === "math") {
+      try {
+        const [num1, operator, num2] = currentWord.split(" ");
+        const answer = parseInt(userInput);
+        const expected =
+          operator === "+" ? +num1 + +num2 :
+          operator === "-" ? +num1 - +num2 :
+          operator === "x" ? +num1 * +num2 : NaN;
+        correct = answer === expected;
+      } catch {
+        correct = false;
+      }
+    }else {
       correct = userInput.toUpperCase() === currentWord;
     }
 
@@ -138,8 +150,10 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
         setIsCorrect(null);
       }, 2000);
     }
+    
   };
 
+  
   const generateNewWord = () => {
     if (gameType === "colorConfusion") {
       const randomWordObj = colorWords[Math.floor(Math.random() * colorWords.length)];
@@ -149,9 +163,17 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
         randomDisplayColorObj = colorWords[Math.floor(Math.random() * colorWords.length)];
       }
 
-      setCurrentWord(randomWordObj.name); 
-      setDisplayedColor(randomDisplayColorObj.hex); 
+      setCurrentWord(randomWordObj.name);
+      setDisplayedColor(randomDisplayColorObj.hex);
       playIshaan("What color is the word displayed in?");
+    } else if (gameType === "math") {
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+      const ops = ["+", "-", "x"];
+      const operator = ops[Math.floor(Math.random() * ops.length)];
+      const question = `${num1} ${operator} ${num2}`;
+      setCurrentWord(question);
+      playIshaan(`What is ${num1} ${operator === 'x' ? "times" : operator === '+' ? "plus" : "minus"} ${num2}?`);
     } else {
       const wordList = words[gameType as keyof typeof words] || words.spelling;
       const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
@@ -165,6 +187,8 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
       playIshaan("Let's start! Listen carefully and spell the word.");
     } else if (gameType === "colorConfusion") {
       playIshaan("Let's start! Tell me the color of the word you see.");
+    } else if (gameType === "math") {
+      playIshaan("Let's begin solving math problems!");
     } else if (gameType === "art") {
       playIshaan("Welcome to Art Therapy! Let your creativity flow!");
     } else {
@@ -421,7 +445,50 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
             )}
           </div>
         );
+      case "math":
+    return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h3 className="text-2xl font-bold text-pink-800 mb-4">Math Quiz Game</h3>
+        <p className="text-gray-600 mb-4">Solve simple math problems!</p>
+        <span className="text-6xl mb-4">🧠</span>
+      </div>
 
+      {currentWord ? (
+        <div className="space-y-4">
+          <div className="text-center text-3xl font-bold text-pink-700">
+            {currentWord}
+          </div>
+
+          <Input
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="Type your answer..."
+            className="text-center text-lg"
+            onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          />
+
+          <div className="text-center">
+            <Button
+              onClick={checkAnswer}
+              className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full"
+            >
+              Check Answer
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center">
+          <Button
+            onClick={startGame}
+            className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-full text-lg"
+          >
+            Start Game
+          </Button>
+        </div>
+      )}
+    </div>
+  );
       case "confusion":
         return (
           <div className="space-y-6">
