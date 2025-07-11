@@ -23,7 +23,7 @@ interface MemoryCard {
   type: 'word' | 'image';
   image?: string;
   isMatched: boolean;
-  isSelected: boolean; // ✅ Add this line
+  isSelected: boolean; 
 }
 
 const GameModal = ({ gameType, onClose }: GameModalProps) => {
@@ -52,11 +52,11 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
   }>({ text: '', type: null });
 
   const showGameMessage = (text: string, type: 'success' | 'error') => {
-  setGameMessage({ text, type });
-  setTimeout(() => {
-    setGameMessage({ text: '', type: null });
-  }, 2000);
-
+    setGameMessage({ text, type });
+    setTimeout(() => {
+      setGameMessage({ text: '', type: null });
+    }, 2000);
+  };
   const words = {
     spelling: ["CAT", "DOG", "BIRD", "FISH", "TREE"],
     pronunciation: ["WONDERFUL", "BEAUTIFUL", "AMAZING", "FANTASTIC", "BRILLIANT"],
@@ -506,21 +506,21 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
                   </Button>
                 </div>
                 {isListening && (
-  <div className="flex justify-center mt-4">
-    <div className="flex items-center gap-4">
-      <div className="relative w-12 h-12">
-        <div className="absolute inset-0 rounded-full bg-red-400 animate-ping opacity-75"></div>
+                  <div className="flex justify-center mt-4">
+                    <div className="flex items-center gap-4">
+                      <div className="relative w-12 h-12">
+                        <div className="absolute inset-0 rounded-full bg-red-400 animate-ping opacity-75"></div>
 
-        <div className="relative w-full h-full flex items-center justify-center rounded-full bg-red-600 text-white">
-          <Mic className="w-5 h-5" />
-        </div>
-      </div>
+                        <div className="relative w-full h-full flex items-center justify-center rounded-full bg-red-600 text-white">
+                          <Mic className="w-5 h-5" />
+                        </div>
+                      </div>
 
-      {/* Listening Text */}
-      <span className="text-red-600 font-semibold text-lg">Listening...</span>
-    </div>
-  </div>
-)}
+                      {/* Listening Text */}
+                      <span className="text-red-600 font-semibold text-lg">Listening...</span>
+                    </div>
+                  </div>
+                )}
                 <div className="text-center">
                   <Button
                     onClick={startSpeechRecognition}
@@ -723,30 +723,37 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
         );
 
         case "memoryMatch":
-          return (
-            <div className="flex flex-col items-center">
+        return (
+          <div className="flex flex-col items-center">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-blue-800 mb-4">Memory Match Game</h3>
+              <p className="text-gray-600 mb-4">Match the word to its picture!</p>
+              <div className="text-6xl mb-4">🧠</div>
+            </div>
+
+            {memoryGameComplete ? (
+              <div className="text-3xl font-bold text-green-600 mb-4 animate-bounce">
+                Game Complete! 🎉
+              </div>
+            ) : (
               <div className="text-2xl font-semibold mb-4">
                 Moves: {moves} | Matches: {matchesFound}/{words.memoryMatchPairs.length}
               </div>
+            )}
 
-              {memoryGameComplete && (
-                <div className="text-3xl font-bold text-green-600 mb-4 animate-bounce">
-                  Game Complete!
-                </div>
-              )}
+            {gameMessage.type && (
+              <div
+                className={`px-4 py-2 mb-4 rounded-lg text-white font-semibold transition-opacity duration-300 ${
+                  gameMessage.type === 'success'
+                    ? 'bg-green-500/80'
+                    : 'bg-red-500/80'
+                }`}
+              >
+                {gameMessage.text}
+              </div>
+            )}
 
-              {gameMessage.type && (
-                <div
-                  className={`px-4 py-2 mb-4 rounded-lg text-white font-semibold transition-opacity duration-300 ${
-                    gameMessage.type === 'success'
-                      ? 'bg-green-500/80'
-                      : 'bg-red-500/80'
-                  }`}
-                >
-                  {gameMessage.text}
-                </div>
-              )}
-
+            {cards.length > 0 ? (
               <div className="grid grid-cols-4 gap-4 max-w-2xl w-full">
                 {cards.map((card) => (
                   <MemoryGameCard
@@ -756,17 +763,28 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
                   />
                 ))}
               </div>
+            ) : (
+              <div className="text-center">
+                <Button
+                  onClick={initializeMemoryMatchGame}
+                  className="mt-6 bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-full text-lg"
+                >
+                  Start Memory Game
+                </Button>
+              </div>
+            )}
 
+            {memoryGameComplete && (
               <Button
                 onClick={initializeMemoryMatchGame}
-                className="mt-6 bg-purple-600 hover:bg-purple-700 text-white"
+                className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg"
               >
-                Play Again
+                Play Again!
               </Button>
-            </div>
+            )}
 
-          );
-
+          </div>
+        );
 
       default:
         return (
