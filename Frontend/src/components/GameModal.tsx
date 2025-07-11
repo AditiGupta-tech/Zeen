@@ -4,11 +4,26 @@ import { Input } from "./Input";
 import { Mic } from "lucide-react";
 import { X, Volume2, Check, ArrowLeft, Paintbrush, Eraser, Redo2, Undo2 } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
+import MemoryGameCard from "./MemoryGameCard";
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 interface GameModalProps {
   gameType: string;
   onClose: () => void;
+}
+
+interface GameItemWithImage {
+  word: string;
+  image: string;
+}
+
+interface MemoryCard {
+  id: number;
+  value: string;
+  type: 'word' | 'image';
+  image?: string;
+  isMatched: boolean;
+  isSelected: boolean; // ✅ Add this line
 }
 
 const GameModal = ({ gameType, onClose }: GameModalProps) => {
