@@ -94,15 +94,6 @@ const Games = () => {
       textColor: "text-purple-800",
       difficulty: "Interactive",
       gameType: "recognition"
-    },
-    {
-      title: "Yoga Challenges",
-      description: "Fun yoga poses and mindfulness exercises for kids",
-      icon: "🧘‍♀️",
-      color: "from-pink-200 to-pink-300",
-      textColor: "text-pink-800",
-      difficulty: "Calm",
-      gameType: "yoga"
     }
   ];
 
