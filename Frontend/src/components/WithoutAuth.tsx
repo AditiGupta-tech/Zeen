@@ -1,5 +1,5 @@
 import { UserPlus, LogIn, BookOpen, MessageSquare, Star, Zap, TrendingUp, Compass } from 'lucide-react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 export default function WithoutAuth() {
   const benefits = [
@@ -52,7 +52,7 @@ export default function WithoutAuth() {
         <div className="flex flex-col mt-12 sm:flex-row justify-center gap-6 mb-16">
           {/* Sign Up Button  */}
           <Link
-            to="/signup" 
+            to="/signup"
             className="group relative inline-flex items-center justify-center px-10 py-3 rounded-full font-semibold text-lg text-white bg-gradient-to-r from-red-600 to bg-pink-600
                        shadow-md hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-300
                        overflow-hidden"
@@ -64,9 +64,9 @@ export default function WithoutAuth() {
             </span>
           </Link>
 
-          {/* 🔐 Log In Button */}
+          {/* Log In Button */}
           <Link
-            to="/login" 
+            to="/login"
             className="group relative inline-flex items-center justify-center px-10 py-3 rounded-full font-semibold text-lg text-blue-700 bg-white
                        border-2 border-transparent transition-all duration-300 ease-in-out shadow-sm hover:shadow-md
                        hover:scale-105 hover:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-200"
@@ -81,41 +81,41 @@ export default function WithoutAuth() {
 
       </div>
 
-{/* BENEFITS SECTION */}
-<h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#4B90FE] to-[#8E66CB] mb-12 relative z-10 animate-fade-in-up">
-  What You Get with a Personalized Account
-</h2>
+      {/* BENEFITS SECTION */}
+      <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#4B90FE] to-[#8E66CB] mb-12 relative z-10 animate-fade-in-up">
+        What You Get with a Personalized Account
+      </h2>
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
-  {benefits.map((benefit, index) => (
-    <div
-      key={index}
-      data-aos="zoom-in-up"
-      data-aos-delay={index * 150}
-      className="group relative bg-white p-6 rounded-3xl shadow-xl flex flex-col items-center text-center cursor-pointer transition-all duration-500 ease-out
-                   hover:scale-[1.04] hover:rotate-1 hover:shadow-2xl hover:shadow-blue-300/50"
-    >
-      <div className="relative z-20 flex flex-col items-center">
-        <div className="p-5 bg-gradient-to-br from-blue-100 via-purple-100 to-orange-100 rounded-full mb-5 shadow-lg ring-4 ring-transparent
-                         group-hover:ring-white group-hover:ring-opacity-80 transition-all duration-300">
-          {benefit.icon}
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors duration-300">
-          {benefit.title}
-        </h3>
-        <p className="text-gray-700 leading-relaxed text-sm">{benefit.description}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
+        {benefits.map((benefit, index) => (
+          <div
+            key={index}
+            data-aos="zoom-in-up"
+            data-aos-delay={index * 150}
+            className="group relative bg-white p-6 rounded-3xl shadow-xl flex flex-col items-center text-center cursor-pointer transition-all duration-500 ease-out
+                         hover:scale-[1.04] hover:rotate-1 hover:shadow-2xl hover:shadow-blue-300/50"
+          >
+            <div className="relative z-20 flex flex-col items-center">
+              <div className="p-5 bg-gradient-to-br from-blue-100 via-purple-100 to-orange-100 rounded-full mb-5 shadow-lg ring-4 ring-transparent
+                               group-hover:ring-white group-hover:ring-opacity-80 transition-all duration-300">
+                {benefit.icon}
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors duration-300">
+                {benefit.title}
+              </h3>
+              <p className="text-gray-700 leading-relaxed text-sm">{benefit.description}</p>
+            </div>
+
+            <div className="absolute inset-0 rounded-3xl bg-blue-400 opacity-0 group-hover:opacity-10 group-hover:animate-pulseLight transition-opacity duration-300 z-0"></div>
+
+            <style jsx>{`
+              .group:hover {
+                transform: perspective(1000px) rotateX(3deg) rotateY(-3deg);
+              }
+            `}</style>
+          </div>
+        ))}
       </div>
-
-      <div className="absolute inset-0 rounded-3xl bg-blue-400 opacity-0 group-hover:opacity-10 group-hover:animate-pulseLight transition-opacity duration-300 z-0"></div>
-
-      <style jsx>{`
-        .group:hover {
-          transform: perspective(1000px) rotateX(3deg) rotateY(-3deg);
-        }
-      `}</style> 
-    </div>
-  ))}
-</div>
 
     </section>
   );

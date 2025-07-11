@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navbar';
 import Footer from '../components/Footer';
 
-export default function LoginPage() {
-  const navigate = useNavigate();
+interface LoginPageProps {
+  onLoginSuccess: () => void; 
+}
+
+export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
+  const navigate = useNavigate(); 
 
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '', form: '' });
@@ -33,15 +37,20 @@ export default function LoginPage() {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     setErrors(prev => ({ ...prev, [name]: '' }));
+    setErrors(prev => ({ ...prev, form: '' }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateLoginForm()) return;
+    if (!validateLoginForm()) {
+        setErrors(prev => ({ ...prev, form: 'Please correct the errors in the form.' }));
+        return;
+    }
 
     setLoading(true);
     setErrors(prev => ({ ...prev, form: '' }));
+    setToast(''); 
 
     try {
       const res = await fetch('http://localhost:3000/api/login', {
@@ -53,23 +62,21 @@ export default function LoginPage() {
       let data;
       try {
         data = await res.json();
-      } catch {
-        throw new Error('Server sent invalid response.');
+      } catch (jsonError) {
+        throw new Error(`Server responded with status ${res.status}, but no valid JSON. Please try again.`);
       }
 
       if (!res.ok) {
-        throw new Error(data?.message || 'Login failed');
+        throw new Error(data?.message || `Login failed with status: ${res.status}`);
       }
 
-      localStorage.setItem('userToken', data.token); 
-      setToast('Login successful! Redirecting...');
+      localStorage.setItem('token', data.token);
+      setToast('Login successful!'); 
+      onLoginSuccess();
 
-      setTimeout(() => {
-        navigate('/personalize'); 
-        window.location.reload(); 
-      }, 1200);
     } catch (err: any) {
-      setErrors(prev => ({ ...prev, form: err.message || 'Login failed' }));
+      setErrors(prev => ({ ...prev, form: err.message || 'An unexpected error occurred. Please try again.' }));
+      setToast(''); 
     } finally {
       setLoading(false);
     }
@@ -155,6 +162,16 @@ export default function LoginPage() {
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
+          <p className="text-center text-sm mt-4">
+            Don't have an account?{' '}
+            <button
+              type="button" 
+              onClick={() => navigate('/signup')} 
+              className="text-purple-600 font-semibold hover:underline"
+            >
+              Sign Up
+            </button>
+          </p>
         </div>
       </main>
 
