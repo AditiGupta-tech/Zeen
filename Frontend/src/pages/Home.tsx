@@ -9,18 +9,32 @@ import AuthSection from "../components/Auth";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { ArrowRight, Mic } from "lucide-react";
+import StoryPromptModal from "../components/StoryPromptModal"; 
+import { useState } from "react";
+
 
 const Home = () => {
 
   const navigate = useNavigate();
-
-const handleNavigate = () => {
-  navigate("/personalize");
-};
+  const [showStoryModal, setShowStoryModal] = useState(false);
+  const handleNavigate = () => {
+    navigate("/personalize");
+  };
 
   const handleStartJourney = () => {
     document.getElementById("games")?.scrollIntoView({ behavior: "smooth" });
   };
+
+
+
+
+
+  const handleFeatureClick = (featureTitle: string) => {
+    if (featureTitle === "AI Story Prompts") {
+      setShowStoryModal(true);
+    }
+  };
+
 
 const features = [
     {
@@ -198,6 +212,7 @@ const features = [
                   <Button
                     size="sm"
                     variant="outline"
+                    onClick={() => handleFeatureClick(feature.title)}
                     className={`mt-4 border-current ${feature.textColor} hover:bg-white/20`}
                   >
                     Try Now <ArrowRight className="ml-1 h-3 w-3" />
@@ -214,6 +229,9 @@ const features = [
       <ProgressSection />
       <AuthSection />
       <Faqs />
+      {showStoryModal && (
+        <StoryPromptModal onClose={() => setShowStoryModal(false)} />
+      )}
       <Footer />
       <ChatbotIcon />
     </div>
