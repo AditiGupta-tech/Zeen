@@ -1,0 +1,114 @@
+.schedule-container {
+  background: #f9f9ff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.07);
+  max-width: 850px;
+  margin: 2rem auto;
+  font-family: "Inter", sans-serif;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.schedule-header h2 {
+  font-size: 1.6rem;
+  color: #212121;
+}
+
+.add-task-btn {
+  background: #0077b6;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  border-radius: 0.6rem;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.add-task-btn:hover {
+  background: #023e8a;
+  transform: scale(1.05);
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-li {
+  background: #ffffff;
+  border: 1.5px solid #d0ebff;
+  border-radius: 0.8rem;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.task-li:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+}
+
+.task-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.task-pills {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.coin {
+  font-size: 1.5rem;
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.pill {
+  font-size: 0.65rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pill:hover {
+  transform: scale(1.05);
+}
+
+.pill.custom {
+  background-color: #ff1744;
+  color: white;
+}
+
+.pill.edit {
+  background-color: #00c853;
+  color: white;
+}
+
+.pill.delete {
+  background-color: #d50000;
+  color: white;
+}
