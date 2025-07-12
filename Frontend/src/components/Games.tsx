@@ -106,7 +106,9 @@ const Games = () => {
     }
   ];
 
-  const handlePlayGame = (gameType: string) => {
+   const handlePlayGame = (gameType: string) => {
+    window.isGameActive=true;
+    if (window.pauseVoiceNav) window.pauseVoiceNav();  
     setActiveGame(gameType);
   };
 
@@ -195,9 +197,13 @@ const Games = () => {
       </div>
       
       {activeGame && (
-        <GameModal 
-          gameType={activeGame} 
-          onClose={() => setActiveGame(null)} 
+        <GameModal
+          gameType={activeGame}
+          onClose={() => {
+            setActiveGame(null);
+            window.isGameActive=false;
+            if (window.resumeVoiceNav) window.resumeVoiceNav(); 
+          }}
         />
       )}
     </section>
