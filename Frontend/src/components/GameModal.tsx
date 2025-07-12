@@ -63,6 +63,12 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     { name: "Black", hex: "#000000", emoji: '⚫' },
     { name: "White", hex: "#FFFFFF", emoji: '⚪', textColor: "#000000" },
   ];
+  const playBindaasAudio = () => {
+  const audio = new Audio('/bindaasAudio.mp3');
+  audio.play().catch((error) => {
+    console.error("Audio play failed:", error);
+  });
+};
 
   const playIshaan = (message: string) => {
     const utterance = new SpeechSynthesisUtterance(message);
@@ -94,7 +100,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
 
       if (correct) {
         setScore(score + 1);
-        playIshaan("Ekdum Jhakaas! Perfect!");
+        playBindaasAudio();
       } else {
         playIshaan("Try again!");
       }
@@ -138,7 +144,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
 
     if (correct) {
       setScore(score + 1);
-      playIshaan("Ekdum Jhakaas! Well done!");
+      playBindaasAudio();
       setTimeout(() => {
         generateNewWord();
         setIsCorrect(null);
@@ -707,7 +713,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
               {isCorrect ? (
                 <div className="flex items-center justify-center gap-2">
                   <Check className="h-5 w-5" />
-                  <span className="font-bold">Ekdum Jhakaas! 🌟</span>
+                  <span className="font-bold">Bindaas! 🌟</span>
                 </div>
               ) : (
                 <span className="font-bold">Try again! You can do it! 💪</span>
@@ -730,5 +736,6 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     </div>
   );
 };
+
 
 export default GameModal;
