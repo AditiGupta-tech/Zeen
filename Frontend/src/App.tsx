@@ -69,16 +69,12 @@ const App = () => {
 recognition.onresult = (event) => {
   const command = event.results[0][0].transcript.toLowerCase();
   console.log("🗣️ You said:", command);
-
-  // ✅ STEP 1: Handle exit inside child mode FIRST
   if (window.location.pathname === "/child-mode") {
     if (command.includes("exit") || command.includes("go back")) {
       window.location.href = "/";
-      return; // stop checking other commands
+      return; 
     }
   }
-
-  // ✅ STEP 2: Now handle rest of the global commands
   if (
     command.includes("go home") || command.includes("go back") ||
     command.includes("home") || command.includes("go back to home")
