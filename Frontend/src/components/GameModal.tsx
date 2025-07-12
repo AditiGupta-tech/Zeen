@@ -596,7 +596,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     <div className="space-y-6">
       <div className="text-center">
         <h3 className="text-2xl font-bold text-pink-800 mb-4">Math Quiz Game</h3>
-        <p className="text-gray-600 mb-4">Solve simple math problems!</p>
+        <p className="text-gray-600 mb-4">Addition, subtraction, multiplication and division made fun!</p>
         <span className="text-6xl mb-4">🧠</span>
       </div>
 

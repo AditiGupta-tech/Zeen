@@ -37,7 +37,7 @@ const themes: { [key: string]: GameTheme } = {
       { title: "Object Matching Game", icon: "🪐", color: "from-green-500 to-cyan-700", gameType: "memoryMatch" },
       { title: "Art Therapy", icon: "🎨", color: "from-orange-500 to-red-700", gameType: "art" },
       { title: "Color Confusion Game", icon: "✨", color: "from-pink-500 to-purple-700", gameType: "colorConfusion" },
-      { title: "Math Quiz", icon: "💫", color: "from-yellow-500 to-orange-700", gameType: "movement" },
+      { title: "Math Quiz", icon: "💫", color: "from-yellow-500 to-orange-700", gameType: "math" },
       { title: "Object Recognition Game", icon: "🔭", color: "from-gray-600 to-gray-800", gameType: "recognition" }
     ],
     headingText: "Explore the Galaxy!"
@@ -60,7 +60,7 @@ const themes: { [key: string]: GameTheme } = {
       { title: "Object Matching Game", icon: "🦋", color: "from-sky-400 to-cyan-600", gameType: "memoryMatch" },
       { title: "Art Therapy", icon: "🌻", color: "from-yellow-400 to-yellow-600", gameType: "art" },
       { title: "Color Confusion Game", icon: "🍂", color: "from-amber-600 to-orange-800", gameType: "colorConfusion" },
-      { title: "Math Quiz", icon: "🦌", color: "from-purple-400 to-purple-600", gameType: "movement" },
+      { title: "Math Quiz", icon: "🦌", color: "from-purple-400 to-purple-600", gameType: "math" },
       { title: "Object Recognition Game", icon: "🦊", color: "from-red-300 to-red-500", gameType: "recognition" }
     ],
     headingText: "Adventure in Nature!"
@@ -83,7 +83,7 @@ const themes: { [key: string]: GameTheme } = {
       { title: "Object Matching Game", icon: "🦀", color: "from-orange-300 to-red-400", gameType: "memoryMatch" },
       { title: "Art Therapy", icon: "🐙", color: "from-fuchsia-300 to-indigo-400", gameType: "art" },
       { title: "Color Confusion Game", icon: "🐡", color: "from-yellow-300 to-lime-400", gameType: "colorConfusion" },
-      { title: "Math Quiz", icon: "🐳", color: "from-sky-400 to-blue-500", gameType: "movement" },
+      { title: "Math Quiz", icon: "🐳", color: "from-sky-400 to-blue-500", gameType: "math" },
       { title: "Object Recognition Game", icon: "🐢", color: "from-green-300 to-emerald-400", gameType: "recognition" }
     ],
     headingText: "Dive into the Ocean!"

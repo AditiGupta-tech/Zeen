@@ -70,8 +70,8 @@ const Games = () => {
     },
     {
   title: "Maths Quiz",
-  description: "Solve fun and quick math problems!",
-  icon: "➕",
+  description: "Addition, subtraction, multiplication and division made fun!",
+  icon: "🔢",
   color: "from-indigo-200 to-indigo-300",
   textColor: "text-indigo-800",
   difficulty: "Logical",
@@ -86,16 +86,6 @@ const Games = () => {
   difficulty: "Tricky",
   gameType: "colorConfusion"
   },
-  {
-  title: "Body Movement Games",
-  description: "Dance and move like animals while learning new concepts",
-  icon: "💃",
-  color: "from-blue-200 to-blue-300",
-  textColor: "text-blue-800",
-  difficulty: "Active",
-  gameType: "movement"
-  },
-
     {
       title: "Object Recognition Game",
       description: "Use your webcam to identify objects around you",

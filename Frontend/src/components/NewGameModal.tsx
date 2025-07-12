@@ -12,7 +12,7 @@ const NewGames = () => {
     { title: "Object Matching Game", icon: "🧠", color: "from-indigo-400 to-indigo-500", gameType: "memoryMatch" },
     { title: "Art Therapy", icon: "🎨", color: "from-green-400 to-green-500", gameType: "art" },
     { title: "Color Confusion Game", icon: "🌈", color: "from-teal-400 to-teal-500", gameType: "colorConfusion" },
-    { title: "Math Quiz", icon: "🔢", color: "from-blue-400 to-blue-500", gameType: "movement" },
+    { title: "Math Quiz", icon: "🔢", color: "from-blue-400 to-blue-500", gameType: "math" },
     { title: "Object Recognition Game", icon: "📷", color: "from-purple-400 to-purple-500", gameType: "recognition" }
   ];
 
