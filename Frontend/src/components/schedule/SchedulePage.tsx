@@ -10,12 +10,24 @@ function SchedulePage() {
   const {
     user,
     startTrackingProgress,
-    trackingStartedDate,
+    trackingStartedDate: contextTrackingDate,
     dailySchedule,
-    addDailyLogEntry,
+    logTaskForToday, 
     getDailyLogForDate,
-    isLoading
+    isLoading,
   } = useAppContext();
+
+  const [trackingStartedDate, setTrackingStartedDate] = useState<string | null>(() => {
+    return localStorage.getItem("trackingStartedDate");
+  });
+
+  useEffect(() => {
+    if (contextTrackingDate) {
+      setTrackingStartedDate(contextTrackingDate);
+      localStorage.setItem("trackingStartedDate", contextTrackingDate);
+    }
+  }, [contextTrackingDate]);
+
 
   const userSeverity = user?.severity;
 
@@ -31,8 +43,11 @@ function SchedulePage() {
 
       if (lastLoggedDay !== today) {
         if (dailySchedule && dailySchedule.length > 0) {
-          const completedTaskIds = dailySchedule.map(task => task.id);
-          addDailyLogEntry(today, completedTaskIds);
+          dailySchedule.forEach(task => {
+            if (task.completed) { 
+                logTaskForToday(task.id);
+            }
+          });
           localStorage.setItem("lastLoggedDay", today);
           console.log("Daily activities logged for today.");
         } else {
@@ -53,7 +68,7 @@ function SchedulePage() {
     } else {
       setDailyComment("");
     }
-  }, [trackingStartedDate, dailySchedule, addDailyLogEntry, getDailyLogForDate, userSeverity]);
+  }, [trackingStartedDate, dailySchedule, logTaskForToday, getDailyLogForDate, userSeverity]);
 
   const handleStartTracking = () => {
     const confirmTracking = window.confirm(
@@ -61,6 +76,9 @@ function SchedulePage() {
     );
     if (confirmTracking) {
       startTrackingProgress();
+      const today = new Date().toISOString().split("T")[0];
+      localStorage.setItem("trackingStartedDate", today);
+      setTrackingStartedDate(today);
     }
   };
 

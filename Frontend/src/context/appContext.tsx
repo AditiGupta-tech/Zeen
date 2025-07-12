@@ -16,19 +16,23 @@ import type {
   DailyLogEntry,
   EmergencyContact,
   CheckupLog,
-} from "../types/Index";
+  TherapyAppointments,
+  GameRecommendations,
+  SchoolCustomization,
+} from "../types/Index"; 
 import {
-  fetchUserTasks,
-  saveUserTasks,
+  fetchUserTasks, 
+  saveUserTasks, 
   fetchUserProgress,
   saveUserProgress,
+  UserProgressData, 
   fetchEmergencyContacts,
   saveEmergencyContacts,
   fetchCheckupLogs,
   saveCheckupLogs,
-} from "../utils/api";
+} from "../utils/api"; 
 import { v4 as uuidv4 } from "uuid";
-import { format } from "date-fns"; 
+import { format } from "date-fns";
 
 interface UserProfile {
   email: string;
@@ -81,12 +85,16 @@ interface AppContextType {
   hideConfetti: () => void;
   isLoading: boolean;
   error: string | null;
+
+  currentSeverityTherapy: TherapyAppointments | null;
+  currentSeverityGames: GameRecommendations | null;
+  currentSeveritySchool: SchoolCustomization | null;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const getSeverityKey = (user: UserProfile | null): Severity | null =>
-  user?.severity?.toLowerCase() as Severity || null;
+  (user?.severity?.toLowerCase?.() as Severity) || null;
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -102,24 +110,35 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [currentSeverityTherapy, setCurrentSeverityTherapy] = useState<TherapyAppointments | null>(null);
+  const [currentSeverityGames, setCurrentSeverityGames] = useState<GameRecommendations | null>(null);
+  const [currentSeveritySchool, setCurrentSeveritySchool] = useState<SchoolCustomization | null>(null);
+
   const fullScheduleData = dailyScheduleData as DailyScheduleJSON;
+
+  const saveCurrentDailySchedule = useCallback(async (scheduleToSave: TaskWithStatus[]) => {
+    if (!user?.email || !user?.severity) {
+      if (import.meta.env.DEV) console.warn("Cannot save daily schedule: user or severity missing.");
+      return;
+    }
+    try {
+      await saveUserTasks(user.email, user.severity, scheduleToSave); 
+    } catch (err: any) {
+      setError(`Failed to save daily schedule: ${err.message || "Unknown error"}`);
+      if (import.meta.env.DEV) console.error("Error saving daily schedule:", err);
+    }
+  }, [user]); 
 
   const saveProgress = useCallback(async () => {
     if (!user?.email) return;
 
-    const currentPoints = milestonePoints;
-    const currentMilestones = milestoneTasks;
-    const currentTrackingStartedDate = trackingStartedDate;
-    const currentDailyLogs = dailyLogs;
-    const currentMilestoneIdx = currentMilestone ? currentMilestone[0] : null;
-
-    const progressToSave = {
-      milestonePoints: currentPoints,
-      milestoneTasks: currentMilestones,
-      currentMilestoneIndex: currentMilestoneIdx,
+    const progressToSave: UserProgressData = {
+      milestonePoints: milestonePoints,
+      milestoneTasks: milestoneTasks, 
+      currentMilestone: currentMilestone,
       currentMilestoneLevel: user.severity?.toLowerCase(), 
-      trackingStartedDate: currentTrackingStartedDate,
-      dailyLogs: currentDailyLogs,
+      trackingStartedDate: trackingStartedDate,
+      dailyLogs: dailyLogs,
     };
     try {
       await saveUserProgress(user.email, progressToSave);
@@ -128,20 +147,29 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setError(`Failed to save progress: ${err.message || "Unknown error"}`);
       if (import.meta.env.DEV) console.error("Error saving progress:", err);
     }
-  }, [user, milestonePoints, milestoneTasks, currentMilestone, trackingStartedDate, dailyLogs]); 
+  }, [user, milestonePoints, milestoneTasks, currentMilestone, trackingStartedDate, dailyLogs]);
+
 
   const loadUserData = useCallback(async () => {
     const userId = user?.email || null;
     const severityKey = getSeverityKey(user);
 
     if (import.meta.env.DEV) {
-      console.log("== loadUserData ==");
+      console.log("== loadUserData START ==");
       console.log("User:", userId);
-      console.log("Severity Key:", severityKey);
+      console.log("Severity Key (from user):", severityKey);
     }
 
-    if (!userId || !severityKey || !fullScheduleData.schedule[severityKey]) {
+    if (!userId || !severityKey || !fullScheduleData.schedule || !fullScheduleData.schedule[severityKey]) {
+      if (import.meta.env.DEV && severityKey) {
+          console.warn(`No schedule data found for severity: "${severityKey}". Or user/userId/fullScheduleData missing.`);
+      }
       setIsLoading(false);
+      setDailySchedule([]);
+      setMilestoneTasks([]);
+      setCurrentSeverityTherapy(null);
+      setCurrentSeverityGames(null);
+      setDailyLogs([]); 
       return;
     }
 
@@ -150,48 +178,58 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setError(null);
 
       const [
-        customTasks,
+        fetchedDailySchedule,
         progress,
         fetchedContacts,
         fetchedLogs
       ] = await Promise.all([
-        fetchUserTasks(userId, severityKey),
+        fetchUserTasks(userId, severityKey), 
         fetchUserProgress(userId),
         fetchEmergencyContacts(userId),
         fetchCheckupLogs(userId),
       ]);
 
-      const baseTasks = fullScheduleData.schedule[severityKey].daily_routine.map((task) => ({
-        ...task,
-        id: uuidv4(),
-        isCustom: false,
-        completed: false,
-      }));
+      const selectedSeverityData = fullScheduleData.schedule[severityKey];
 
-      const customTaskFormatted = customTasks.map(task => ({
+      const baseTasksFromJSON: TaskWithStatus[] = selectedSeverityData.daily_routine.map((task) => ({
         ...task,
-        id: uuidv4(),
-        isCustom: true,
+        id: uuidv4(), 
+        isCustom: false,
         completed: false, 
       }));
 
-      setDailySchedule([...baseTasks, ...customTaskFormatted]);
+      const loadedCustomTasks = fetchedDailySchedule.filter(t => t.isCustom);
+
+      const mergedDailySchedule: TaskWithStatus[] = baseTasksFromJSON.map(baseTask => {
+          const savedTask = fetchedDailySchedule.find(
+              st => !st.isCustom && st.time === baseTask.time && st.activity === baseTask.activity
+          );
+          if (savedTask) {
+              return { ...baseTask, id: savedTask.id, completed: savedTask.completed };
+          }
+          return baseTask;
+      });
+
+      setDailySchedule([...mergedDailySchedule, ...loadedCustomTasks]);
+      setCurrentSeverityTherapy(selectedSeverityData.therapy_appointments);
+      setCurrentSeverityGames(selectedSeverityData.game_recommendations);
+      setCurrentSeveritySchool(selectedSeverityData.school_customization);
 
       if (progress) {
         setMilestonePoints(progress.milestonePoints);
         setDailyLogs(progress.dailyLogs || []);
         setTrackingStartedDate(progress.trackingStartedDate);
 
-        const currentLevelMilestones = fullScheduleData.schedule[progress.currentMilestoneLevel?.toLowerCase() as Severity]?.milestone_tasks || [];
+        const currentLevelMilestonesBase = fullScheduleData.schedule[severityKey]?.milestone_tasks || [];
 
-        const loadedMilestoneTasks = currentLevelMilestones.map(jsonMilestone => {
-          const savedMilestone = progress.milestoneTasks?.find(
-            (sm: { task: string; description: string; points: number; }) =>
+        const loadedMilestoneTasks = currentLevelMilestonesBase.map(jsonMilestone => {
+          const savedMilestone = progress.milestoneTasks?.find( 
+            (sm: MilestoneTask) =>
               sm.task === jsonMilestone.task && sm.description === jsonMilestone.description
           );
           return {
             ...jsonMilestone,
-            id: uuidv4(),
+            id: savedMilestone?.id || uuidv4(),
             completed: savedMilestone ? savedMilestone.completed : false,
             completionDate: savedMilestone ? savedMilestone.completionDate : undefined,
           };
@@ -199,11 +237,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
         setMilestoneTasks(loadedMilestoneTasks);
 
-        const nextIncompleteMilestone = loadedMilestoneTasks.find(m => !m.completed);
-        setCurrentMilestone(nextIncompleteMilestone || null);
+        const loadedCurrentMilestone = loadedMilestoneTasks.find(
+            m => progress.currentMilestone && m.task === progress.currentMilestone.task
+        ) || null;
+
+        setCurrentMilestone(loadedCurrentMilestone || loadedMilestoneTasks.find(m => !m.completed) || null);
+
 
       } else {
-        const initialMilestones = fullScheduleData.schedule[severityKey].milestone_tasks.map(m => ({
+        const initialMilestones = selectedSeverityData.milestone_tasks.map(m => ({
           ...m,
           id: uuidv4(),
           completed: false,
@@ -224,13 +266,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     } finally {
       setIsLoading(false);
     }
+    if (import.meta.env.DEV) {
+        console.log("== loadUserData END ==");
+    }
   }, [user, fullScheduleData]);
-  
+
   useEffect(() => {
     if (user?.severity) {
       loadUserData();
     } else {
       setIsLoading(false);
+      setDailySchedule([]);
+      setMilestoneTasks([]);
+      setCurrentSeverityTherapy(null);
+      setCurrentSeverityGames(null);
+      setCurrentSeveritySchool(null);
+      setDailyLogs([]); 
     }
   }, [user, loadUserData]);
 
@@ -241,11 +292,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
     setIsLoading(true);
     try {
-      const today = format(new Date(), "yyyy-MM-dd"); 
+      const today = format(new Date(), "yyyy-MM-dd");
       setTrackingStartedDate(today);
 
       const severityKey = getSeverityKey(user);
-      const initialMilestones = fullScheduleData.schedule[severityKey]?.milestone_tasks.map(m => ({
+      const selectedSeverityData = fullScheduleData.schedule[severityKey];
+      const initialMilestones = selectedSeverityData?.milestone_tasks.map(m => ({
         ...m,
         id: uuidv4(),
         completed: false,
@@ -255,15 +307,23 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setMilestonePoints(0);
       setDailyLogs([]);
 
-      await saveProgress();
+      const baseTasksForInitialSave: TaskWithStatus[] = selectedSeverityData.daily_routine.map(task => ({
+          ...task,
+          id: uuidv4(),
+          isCustom: false,
+          completed: false,
+      }));
+      setDailySchedule(baseTasksForInitialSave); 
+      await saveCurrentDailySchedule(baseTasksForInitialSave); 
 
+      await saveProgress(); 
     } catch (err: any) {
       setError(`Failed to start tracking progress: ${err.message || "Unknown error"}`);
       if (import.meta.env.DEV) console.error("Error starting tracking:", err);
     } finally {
       setIsLoading(false);
     }
-  }, [user, fullScheduleData, saveProgress]);
+  }, [user, fullScheduleData, saveProgress, saveCurrentDailySchedule]);
 
 
   const markMilestoneCompleted = useCallback(async (milestoneId: string) => {
@@ -275,34 +335,30 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setMilestoneTasks((prevTasks) => {
       let updatedPoints = milestonePoints;
       let nextMilestone: MilestoneTask | null = null;
-      let nextMilestoneIndex: number | null = null;
 
       const updatedMilestones = prevTasks.map((milestone) => {
         if (milestone.id === milestoneId && !milestone.completed) {
           updatedPoints += milestone.points;
           setShowConfetti(true);
-          return { ...milestone, completed: true, completionDate: format(new Date(), "yyyy-MM-dd") }; 
+          return { ...milestone, completed: true, completionDate: format(new Date(), "yyyy-MM-dd") };
         }
         return milestone;
       });
 
-      const firstIncompleteIndex = updatedMilestones.findIndex(m => !m.completed);
-      if (firstIncompleteIndex !== -1) {
-        nextMilestone = updatedMilestones[firstIncompleteIndex];
-        nextMilestoneIndex = firstIncompleteIndex;
+      const firstIncompleteMilestone = updatedMilestones.find(m => !m.completed);
+      if (firstIncompleteMilestone) {
+        nextMilestone = firstIncompleteMilestone;
       } else {
         nextMilestone = null;
-        nextMilestoneIndex = null;
-        // next severity level logic
       }
 
       setMilestonePoints(updatedPoints);
       setCurrentMilestone(nextMilestone);
       saveProgress();
 
-      return updatedMilestones; 
+      return updatedMilestones;
     });
-  }, [user, milestonePoints, saveProgress]); 
+  }, [user, milestonePoints, saveProgress]);
 
 
   const logTaskForToday = useCallback((taskId: string) => {
@@ -315,17 +371,17 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       if (existingLogIndex !== -1) {
         updatedLogs = prevLogs.map((log, index) =>
           index === existingLogIndex
-            ? { ...log, completedTasks: [...new Set([...log.completedTasks, taskId])] } 
+            ? { ...log, completedTasks: [...new Set([...log.completedTasks, taskId])] }
             : log
         );
       } else {
         updatedLogs = [...prevLogs, { date: today, completedTasks: [taskId] }];
       }
 
-      saveProgress();
-      return updatedLogs; 
+      return updatedLogs;
     });
-  }, [saveProgress]); 
+  }, []); 
+
 
   const getDailyLogForDate = useCallback((date: string) => {
     return dailyLogs.find(log => log.date === date);
@@ -333,44 +389,86 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
 
   const addCustomTask = useCallback(async (task: ScheduleActivity) => {
-    const newTask = { ...task, id: uuidv4(), isCustom: true, completed: false };
     setDailySchedule(prev => {
-      const updated = [...prev, newTask];
-      if (user?.email && user?.severity) {
-        saveUserTasks(user.email, user.severity.toLowerCase(), updated.filter(t => t.isCustom));
-      }
-      return updated;
+        const newTask = { ...task, id: uuidv4(), isCustom: true, completed: false };
+        const updated = [...prev, newTask];
+        saveCurrentDailySchedule(updated); 
+        return updated;
     });
-  }, [user]);
+  }, [saveCurrentDailySchedule]);
 
   const updateTask = useCallback(async (taskId: string, newActivity: string) => {
     setDailySchedule(prev => {
-      const updated = prev.map(task =>
-        task.id === taskId ? { ...task, activity: newActivity } : task
-      );
-      if (user?.email && user?.severity) {
-        saveUserTasks(user.email, user.severity.toLowerCase(), updated.filter(t => t.isCustom));
-      }
-      return updated;
+        const updated = prev.map(task =>
+            task.id === taskId ? { ...task, activity: newActivity } : task
+        );
+        saveCurrentDailySchedule(updated); 
+        return updated;
     });
-  }, [user]);
+  }, [saveCurrentDailySchedule]);
 
   const deleteTask = useCallback(async (taskId: string) => {
     setDailySchedule(prev => {
-      const updated = prev.filter(task => task.id !== taskId);
-      if (user?.email && user?.severity) {
-        saveUserTasks(user.email, user.severity.toLowerCase(), updated.filter(t => t.isCustom));
-      }
-      return updated;
+        const updated = prev.filter(task => task.id !== taskId);
+        saveCurrentDailySchedule(updated); 
+        return updated;
     });
-  }, [user]);
+  }, [saveCurrentDailySchedule]);
 
   const toggleTaskCompletion = useCallback((taskId: string) => {
-    setDailySchedule(prev => prev.map(task =>
-      task.id === taskId ? { ...task, completed: !task.completed } : task
-    ));
-    logTaskForToday(taskId);
-  }, [logTaskForToday]); 
+    setDailySchedule(prev => {
+      const updatedSchedule = prev.map(task =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      );
+
+      saveCurrentDailySchedule(updatedSchedule);
+
+      const toggledTask = updatedSchedule.find(task => task.id === taskId);
+      if (toggledTask && user?.email) {
+        const today = format(new Date(), "yyyy-MM-dd");
+        setDailyLogs(prevLogs => {
+            let logEntry = prevLogs.find(log => log.date === today);
+            let newLogs: DailyLogEntry[];
+
+            if (logEntry) {
+                let updatedCompletedTasks = logEntry.completedTasks;
+                if (toggledTask.completed) {
+                    if (!updatedCompletedTasks.includes(taskId)) {
+                        updatedCompletedTasks = [...updatedCompletedTasks, taskId];
+                    }
+                } else {
+                    updatedCompletedTasks = updatedCompletedTasks.filter(id => id !== taskId);
+                }
+                logEntry = { ...logEntry, completedTasks: updatedCompletedTasks };
+                newLogs = prevLogs.map(log => log.date === today ? logEntry : log);
+            } else {
+                if (toggledTask.completed) {
+                    newLogs = [...prevLogs, { date: today, completedTasks: [taskId] }];
+                } else {
+                    newLogs = prevLogs; 
+                }
+            }
+
+            const progressToSave: UserProgressData = {
+                milestonePoints: milestonePoints,
+                milestoneTasks: milestoneTasks,
+                currentMilestone: currentMilestone,
+                currentMilestoneLevel: user.severity?.toLowerCase(),
+                trackingStartedDate: trackingStartedDate,
+                dailyLogs: newLogs,
+            };
+            saveUserProgress(user.email, progressToSave).catch(err => {
+                setError(`Failed to save daily logs in toggleTaskCompletion: ${err.message || "Unknown error"}`);
+                console.error("Error saving daily logs in toggleTaskCompletion:", err);
+            });
+            return newLogs;
+        });
+      }
+
+      return updatedSchedule;
+    });
+  }, [user, milestonePoints, milestoneTasks, currentMilestone, trackingStartedDate, saveCurrentDailySchedule, saveUserProgress]);
+
 
   const addEmergencyContact = useCallback(async (contact: Omit<EmergencyContact, "id">) => {
     const newContact = { ...contact, id: uuidv4() };
@@ -439,7 +537,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     markMilestoneCompleted,
     trackingStartedDate,
     dailyLogs,
-    logTaskForToday, 
+    logTaskForToday,
     getDailyLogForDate,
     emergencyContacts,
     addEmergencyContact,
@@ -453,6 +551,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     hideConfetti,
     isLoading,
     error,
+    currentSeverityTherapy,
+    currentSeverityGames,
+    currentSeveritySchool,
   }), [
     user, dailySchedule, milestoneTasks, milestonePoints,
     currentMilestone, trackingStartedDate, dailyLogs,
@@ -461,7 +562,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     toggleTaskCompletion, addEmergencyContact, updateEmergencyContact,
     deleteEmergencyContact, addCheckupLog, updateCheckupLog,
     deleteCheckupLog, hideConfetti, startTrackingProgress,
-    markMilestoneCompleted, logTaskForToday, getDailyLogForDate 
+    markMilestoneCompleted, logTaskForToday, getDailyLogForDate,
+    currentSeverityTherapy, currentSeverityGames, currentSeveritySchool
   ]);
 
   return (
@@ -471,7 +573,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   );
 };
 
-// Hook
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) throw new Error("useAppContext must be used within an AppProvider");

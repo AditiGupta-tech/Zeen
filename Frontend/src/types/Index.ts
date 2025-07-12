@@ -29,46 +29,44 @@ export interface MilestoneTask {
   description: string;
   points: number;
   category: string;
-  difficulty_level: "easy" | "medium" | "hard";
+  difficulty_level: string;
   teaches: string[];
-  id: string; 
-  completed?: boolean; 
+  id: string;
+  completed: boolean;
   completionDate?: string; 
 }
 
-export interface DyslexiaLevelSchedule {
+export interface SeveritySpecificData {
   age_range: string;
   daily_routine: ScheduleActivity[];
   therapy_appointments: TherapyAppointments;
   game_recommendations: GameRecommendations;
   school_customization: SchoolCustomization;
-  milestone_tasks: MilestoneTask[];
+  milestone_tasks: MilestoneTask[]; 
 }
 
 export interface DailyScheduleJSON {
   schedule: {
-    mild: DyslexiaLevelSchedule;
-    moderate: DyslexiaLevelSchedule;
-    severe: DyslexiaLevelSchedule;
+    mild: SeveritySpecificData;
+    moderate: SeveritySpecificData;
+    severe: SeveritySpecificData;
   };
 }
 
 export interface DailyLogEntry {
-  date: string; 
-  completedTasks: string[]; 
-  notes?: string; 
+  date: string;
+  completedTasks: string[];
 }
 
 export interface EmergencyContact {
   id: string;
   name: string;
-  relationship: string;
+  relation: string;
   phone: string;
 }
 
 export interface CheckupLog {
   id: string;
-  date: string; 
-  doctorName: string;
-  notes: string;
+  date: string;
+  details: string;
 }

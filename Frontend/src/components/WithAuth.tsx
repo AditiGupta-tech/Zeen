@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { format } from 'date-fns'; 
 import SchedulePage from './schedule/SchedulePage';
 import Community from './Community';
 import Events from './Events';
 import Therapies from './Therapies';
-import { useAppContext } from '../context/appContext'; 
+import { useAppContext } from '../context/appContext';
 import ConfettiCannon from './schedule/Confetti';
 
 interface UserProfile {
@@ -13,8 +15,8 @@ interface UserProfile {
   childName: string;
   childDob: string;
   gender: string;
-  condition: string | string[]; 
-  dyslexiaTypes: string | string[]; 
+  condition: string | string[];
+  dyslexiaTypes: string | string[];
   otherConditionText: string;
   severity: string;
   specifications: string;
@@ -29,7 +31,8 @@ interface WithAuthProps {
 
 export default function WithAuth({ onLogout }: WithAuthProps) {
   const { user, setUser, isLoading: isAppContextLoading, error: appContextError } = useAppContext();
-  
+  const navigate = useNavigate(); 
+
   const [profile, setProfile] = useState<UserProfile>({
     email: '', relationToChild: '', childName: '', childDob: '', gender: '',
     condition: '', dyslexiaTypes: '', otherConditionText: '', severity: '',
@@ -38,16 +41,19 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
 
   const [originalProfile, setOriginalProfile] = useState<UserProfile | null>(null);
   const [editMode, setEditMode] = useState(false);
-  const [isLoadingProfile, setIsLoadingProfile] = useState(true); 
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [profileError, setProfileError] = useState<string | null>(null);
 
-  // UI state for menu and modals
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
-  
-  // State to control visibility of SchedulePage within WithAuth
-  const [showSchedulePage, setShowSchedulePage] = useState(false);
+
+  const [showSchedulePage, setShowSchedulePage] = useState(() => {
+    return localStorage.getItem("showSchedulePage") === "true";
+  });
+  useEffect(() => {
+    localStorage.setItem("showSchedulePage", showSchedulePage.toString());
+  }, [showSchedulePage]);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -59,7 +65,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
         console.error("Authentication token not found. Please log in.");
         setProfileError("You are not logged in. Please log in to view your profile.");
         setIsLoadingProfile(false);
-        onLogout(); 
+        onLogout();
         return;
       }
 
@@ -104,7 +110,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
         };
         setProfile(mappedProfile);
         setOriginalProfile(mappedProfile);
-        setUser(mappedProfile); 
+        setUser(mappedProfile);
       } catch (err: any) {
         console.error('Failed to fetch profile in WithAuth:', err);
         if (!profileError) {
@@ -116,13 +122,13 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
       }
     };
 
-    if (!user || !profile.email) { 
+    if (!user || !profile.email) {
       fetchProfileData();
     }
-  }, [user, profile.email, setUser, onLogout, profileError]); 
+  }, [user, profile.email, setUser, onLogout, profileError]);
 
   const handleProfileSave = async () => {
-    setIsLoadingProfile(true); 
+    setIsLoadingProfile(true);
     setProfileError(null);
 
     const token = localStorage.getItem('token');
@@ -130,7 +136,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
       console.error("Authentication token not found for save. Please log in.");
       setProfileError("You are not logged in. Please log in to save your profile.");
       setIsLoadingProfile(false);
-      onLogout(); 
+      onLogout();
       return;
     }
 
@@ -188,7 +194,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
       };
       setProfile(remappedUpdatedData);
       setOriginalProfile(remappedUpdatedData);
-      setUser(remappedUpdatedData); 
+      setUser(remappedUpdatedData);
       alert('Profile updated successfully!');
       setEditMode(false);
       setShowProfileModal(false);
@@ -258,6 +264,23 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
             >
               View Profile
             </button>
+            {showSchedulePage && (
+              <button
+                onClick={() => {
+                  const confirmStop = window.confirm("Are you sure you want to stop tracking progress?");
+                  if (confirmStop) {
+                    localStorage.removeItem("trackingStartedDate");
+                    localStorage.setItem("showSchedulePage", "false");
+                    setShowSchedulePage(false);
+                    setMenuOpen(false);
+                  }
+                }}
+                className="block w-full text-left px-4 py-2 text-yellow-600 hover:bg-yellow-50"
+              >
+                Stop Tracking Progress
+              </button>
+            )}
+
             <button
               onClick={() => {
                 setShowLogoutModal(true);
@@ -279,7 +302,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
         className="text-center mt-12 mb-10 px-2"
       >
         <h1 className="text-4xl mt-10 md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-pink-400
-                         animate-textGlow drop-shadow-md mb-4"> Welcome to Zeen Personalization
+                        animate-textGlow drop-shadow-md mb-4"> Welcome to Zeen Personalization
         <p className="mt-2 text-lg text-gray-600">You’re logged in and ready to roll.</p></h1>
       </motion.div>
 
@@ -287,10 +310,14 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
       {!showSchedulePage && (
         <div className="text-center my-8">
           <button
-            onClick={() => setShowSchedulePage(true)}
+            onClick={() => {
+              const todayStr = format(new Date(), "yyyy-MM-dd");
+              localStorage.setItem("trackingStartedDate", todayStr);
+              setShowSchedulePage(true);
+            }}
             className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg shadow-lg
-                         hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all duration-300
-                         focus:outline-none focus:ring-4 focus:ring-purple-300"
+                        hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all duration-300
+                        focus:outline-none focus:ring-4 focus:ring-purple-300"
           >
             Track My Progress
           </button>
@@ -322,7 +349,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
         </motion.div>
       </div>
 
-      <ConfettiCannon /> 
+      <ConfettiCannon />
 
       {/* Logout Modal */}
       <AnimatePresence>
@@ -336,7 +363,17 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
                 <button onClick={() => setShowLogoutModal(false)} className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">
                   Cancel
                 </button>
-                <button onClick={onLogout} className="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600">
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("showSchedulePage");
+                    localStorage.removeItem("trackingStartedDate");
+                    setUser(null);
+                    setShowLogoutModal(false);
+                    navigate("/"); // Redirect to /personalize after logout
+                  }}
+                  className="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600"
+                >
                   Logout
                 </button>
               </div>

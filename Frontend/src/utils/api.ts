@@ -4,39 +4,64 @@ import type {
   DailyLogEntry,
   EmergencyContact,
   CheckupLog,
+  Severity, 
 } from "../types/Index";
+
+export interface TaskWithStatus extends ScheduleActivity {
+  id: string; 
+  isCustom: boolean; 
+  completed: boolean;
+}
+
 
 const mockDelay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-// Task Management APIs 
+const getUserKey = (userId: string, keySuffix: string) => `dyslexiaBuddy_${userId}_${keySuffix}`;
+
 export const saveUserTasks = async (
   userId: string,
-  severity: string,
-  tasks: ScheduleActivity[]
+  severity: Severity, 
+  tasks: TaskWithStatus[] 
 ): Promise<void> => {
-  await mockDelay(500);
-  console.log(`API: Saving tasks for user ${userId}, severity ${severity}:`, tasks);
-  return;
+  await mockDelay(500); 
+  const key = getUserKey(userId, `dailySchedule_${severity.toLowerCase()}`);
+  try {
+    localStorage.setItem(key, JSON.stringify(tasks));
+    console.log(`API: Successfully saved daily schedule for user ${userId}, severity ${severity}.`);
+  } catch (error) {
+    console.error(`API: Error saving daily schedule for user ${userId}, severity ${severity}:`, error);
+    throw error; 
+  }
 };
 
 export const fetchUserTasks = async (
   userId: string,
-  severity: string
-): Promise<ScheduleActivity[]> => {
-  await mockDelay(500);
-  console.log(`API: Fetching custom tasks for user ${userId}, severity ${severity}`);
-  return [];
+  severity: Severity 
+): Promise<TaskWithStatus[]> => { 
+  await mockDelay(500); 
+  const key = getUserKey(userId, `dailySchedule_${severity.toLowerCase()}`);
+  try {
+    const storedTasks = localStorage.getItem(key);
+    if (storedTasks) {
+      console.log(`API: Successfully fetched daily schedule for user ${userId}, severity ${severity}.`);
+      return JSON.parse(storedTasks) as TaskWithStatus[];
+    }
+    console.log(`API: No daily schedule found for user ${userId}, severity ${severity}. Returning empty array.`);
+    return []; 
+  } catch (error) {
+    console.error(`API: Error fetching daily schedule for user ${userId}, severity ${severity}:`, error);
+    return []; 
+  }
 };
 
-// Progress Tracking APIs 
 export interface UserProgressData {
-  currentMilestoneLevel: "mild" | "moderate" | "severe"; 
-  currentMilestoneIndex: number; 
-  milestonePoints: number;
-  completedMilestones: MilestoneTask[]; 
-  dailyLogs: DailyLogEntry[];
+  milestonePoints: number; 
+  milestoneTasks: MilestoneTask[]; 
+  currentMilestone: MilestoneTask | null; 
+  currentMilestoneLevel: Severity | string | undefined; 
   trackingStartedDate: string | null;
+  dailyLogs: DailyLogEntry[];
 }
 
 export const fetchUserProgress = async (
@@ -44,32 +69,45 @@ export const fetchUserProgress = async (
 ): Promise<UserProgressData | null> => {
   await mockDelay(500);
   console.log(`API: Fetching user progress for ${userId}`);
-  const storedProgress = localStorage.getItem(`user_progress_${userId}`);
+  const storedProgress = localStorage.getItem(getUserKey(userId, 'progress'));
   if (storedProgress) {
-    return JSON.parse(storedProgress);
+    try {
+      return JSON.parse(storedProgress) as UserProgressData;
+    } catch (error) {
+      console.error("API: Error parsing stored progress:", error);
+      return null;
+    }
   }
-  return null; 
+  return null;
 };
 
 export const saveUserProgress = async (
   userId: string,
-  progress: UserProgressData
+  progress: UserProgressData 
 ): Promise<void> => {
   await mockDelay(500);
   console.log(`API: Saving user progress for ${userId}:`, progress);
-  localStorage.setItem(`user_progress_${userId}`, JSON.stringify(progress));
-  return;
+  try {
+    localStorage.setItem(getUserKey(userId, 'progress'), JSON.stringify(progress));
+  } catch (error) {
+    console.error("API: Error saving user progress to localStorage:", error);
+    throw error;
+  }
 };
 
-// Emergency Contacts APIs 
 export const fetchEmergencyContacts = async (
   userId: string
 ): Promise<EmergencyContact[]> => {
   await mockDelay(500);
   console.log(`API: Fetching emergency contacts for ${userId}`);
-  const storedContacts = localStorage.getItem(`emergency_contacts_${userId}`);
+  const storedContacts = localStorage.getItem(getUserKey(userId, 'emergencyContacts'));
   if (storedContacts) {
-    return JSON.parse(storedContacts);
+    try {
+      return JSON.parse(storedContacts);
+    } catch (error) {
+      console.error("API: Error parsing stored emergency contacts:", error);
+      return [];
+    }
   }
   return [];
 };
@@ -80,19 +118,27 @@ export const saveEmergencyContacts = async (
 ): Promise<void> => {
   await mockDelay(500);
   console.log(`API: Saving emergency contacts for ${userId}:`, contacts);
-  localStorage.setItem(`emergency_contacts_${userId}`, JSON.stringify(contacts));
-  return;
+  try {
+    localStorage.setItem(getUserKey(userId, 'emergencyContacts'), JSON.stringify(contacts));
+  } catch (error) {
+    console.error("API: Error saving emergency contacts to localStorage:", error);
+    throw error;
+  }
 };
 
-// Checkup Logs APIs
 export const fetchCheckupLogs = async (
   userId: string
 ): Promise<CheckupLog[]> => {
   await mockDelay(500);
   console.log(`API: Fetching checkup logs for ${userId}`);
-  const storedLogs = localStorage.getItem(`checkup_logs_${userId}`);
+  const storedLogs = localStorage.getItem(getUserKey(userId, 'checkupLogs'));
   if (storedLogs) {
-    return JSON.parse(storedLogs);
+    try {
+      return JSON.parse(storedLogs);
+    } catch (error) {
+      console.error("API: Error parsing stored checkup logs:", error);
+      return [];
+    }
   }
   return [];
 };
@@ -103,6 +149,10 @@ export const saveCheckupLogs = async (
 ): Promise<void> => {
   await mockDelay(500);
   console.log(`API: Saving checkup logs for ${userId}:`, logs);
-  localStorage.setItem(`checkup_logs_${userId}`, JSON.stringify(logs));
-  return;
+  try {
+    localStorage.setItem(getUserKey(userId, 'checkupLogs'), JSON.stringify(logs));
+  } catch (error) {
+    console.error("API: Error saving checkup logs to localStorage:", error);
+    throw error;
+  }
 };

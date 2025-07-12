@@ -11,7 +11,7 @@ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogni
 let recognition: SpeechRecognition | null = null;
 
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -144,6 +144,7 @@ recognition.onresult = (event) => {
 
 const AppContentWrapper = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const hideChatbot = location.pathname === "/child-mode";
 
   return (
@@ -156,7 +157,7 @@ const AppContentWrapper = () => {
           <Route path="/parents" element={<ParentsSection />} />
           <Route path="/personalize" element={<PersonalizeExperience />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage onLoginSuccess={() => navigate('/personalize')}/>}/>
           <Route path="/child-mode" element={<ChildModePage />} />
           <Route path="*" element={<div>404 - Not Found</div>} />
         </Routes>

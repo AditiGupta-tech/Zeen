@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
     "target": "ESNext",
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",

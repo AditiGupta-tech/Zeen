@@ -112,3 +112,49 @@
   background-color: #d50000;
   color: white;
 }
+
+.section-card {
+    background-color: var(--card-bg-color, #f9f9f9); 
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.section-card h3 {
+    color: var(--primary-text-color, #333);
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    border-bottom: 1px solid var(--divider-color, #eee);
+    padding-bottom: 10px;
+}
+
+.details-list, .milestone-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.details-list li, .milestone-list li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    color: var(--secondary-text-color, #555);
+}
+
+.details-list li strong, .milestone-list li strong {
+    color: var(--primary-text-color, #333);
+}
+
+.milestone-list .completed {
+    text-decoration: line-through;
+    color: var(--completed-text-color, #888);
+    opacity: 0.7;
+}
+
+.completion-status {
+    font-size: 0.85em;
+    color: green; 
+    margin-left: 5px;
+}

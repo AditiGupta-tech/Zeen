@@ -14,7 +14,7 @@
         { "time": "15:30", "activity": "Games: Object Matching or Letter Sound Game (15 mins)" },
         { "time": "16:00", "activity": "Snack time" },
         { "time": "16:30", "activity": "Homework or Revision (with assistive tech)" },
-        { "time": "17:30", "activity": "Pronunciation practice using app/audio (10 words)" },
+        { "time": "10:30", "activity": "Pronunciation practice using app/audio (10 words)" },
         { "time": "18:00", "activity": "Relaxation - music / guided meditation (10 mins)" },
         { "time": "18:30", "activity": "Dinner with family" },
         { "time": "19:30", "activity": "Story time (audiobook or assisted reading - 15 mins)" },
@@ -37,52 +37,49 @@
         "teacher_support": "Allow oral answers, use visuals, extra time in class",
         "tools_and_tech": ["Text-to-speech software", "Spell check extensions"]
       },
-  "milestone_tasks": [
-      {
-        "task": "Read a short story independently",
-        "description": "Child reads a 5-10 sentence story without help.",
-        "points": 50,
-        "category": "reading",
-        "difficulty_level": "hard",
-        "teaches": ["reading", "attention", "memory"]
-      },
-      {
-        "task": "Complete 3 spelling quizzes in a week",
-        "description": "Finish spelling challenges with 80%+ accuracy.",
-        "points": 40,
-        "category": "spelling",
-        "difficulty_level": "medium",
-        "teaches": ["spelling", "memory", "phonics"]
-      },
-      {
-        "task": "Pronounce 20 new words correctly",
-        "description": "Accurate pronunciation over the span of a week.",
-        "points": 30,
-        "category": "phonics",
-        "difficulty_level": "medium",
-        "teaches": ["phonics", "expression"]
-      },
-      {
-        "task": "Finish 5 math quizzes",
-        "description": "Each quiz with at least 8/10 score.",
-        "points": 30,
-        "category": "math",
-        "difficulty_level": "medium",
-        "teaches": ["math", "attention", "memory"]
-      },
-      {
-        "task": "Story retelling activity",
-        "description": "Retell a familiar story in own words with visual prompts.",
-        "points": 25,
-        "category": "language expression",
-        "difficulty_level": "hard",
-        "teaches": ["language", "expression", "memory"]
-      }
-    ]
-}
-
+      "milestone_tasks": [
+        {
+          "task": "Read a short story independently",
+          "description": "Child reads a 5-10 sentence story without help.",
+          "points": 50,
+          "category": "reading",
+          "difficulty_level": "hard",
+          "teaches": ["reading", "attention", "memory"]
+        },
+        {
+          "task": "Complete 3 spelling quizzes in a week",
+          "description": "Finish spelling challenges with 80%+ accuracy.",
+          "points": 40,
+          "category": "spelling",
+          "difficulty_level": "medium",
+          "teaches": ["spelling", "memory", "phonics"]
+        },
+        {
+          "task": "Pronounce 20 new words correctly",
+          "description": "Accurate pronunciation over the span of a week.",
+          "points": 30,
+          "category": "phonics",
+          "difficulty_level": "medium",
+          "teaches": ["phonics", "expression"]
+        },
+        {
+          "task": "Finish 5 math quizzes",
+          "description": "Each quiz with at least 8/10 score.",
+          "points": 30,
+          "category": "math",
+          "difficulty_level": "medium",
+          "teaches": ["math", "attention", "memory"]
+        },
+        {
+          "task": "Story retelling activity",
+          "description": "Retell a familiar story in own words with visual prompts.",
+          "points": 25,
+          "category": "language expression",
+          "difficulty_level": "hard",
+          "teaches": ["language", "expression", "memory"]
+        }
+      ]
     },
-
     "moderate": {
       "age_range": "4-12",
       "daily_routine": [
@@ -121,49 +118,48 @@
         "tools_and_tech": ["Phonics apps", "Tablet with audio books"]
       },
       "milestone_tasks": [
-      {
-        "task": "Identify and pronounce 10 sight words",
-        "description": "With or without audio prompts.",
-        "points": 40,
-        "category": "phonics",
-        "difficulty_level": "medium",
-        "teaches": ["phonics", "reading"]
-      },
-      {
-        "task": "Letter discrimination game streak",
-        "description": "Score 3 consecutive wins in letter confusion game.",
-        "points": 30,
-        "category": "letter recognition",
-        "difficulty_level": "medium",
-        "teaches": ["visual processing", "phonics"]
-      },
-      {
-        "task": "Finish a guided reading session",
-        "description": "With visuals, phonics, and minimal adult support.",
-        "points": 35,
-        "category": "reading",
-        "difficulty_level": "medium",
-        "teaches": ["reading", "phonics", "attention"]
-      },
-      {
-        "task": "Solve 10 simple math visual questions",
-        "description": "Completed across 3 sessions.",
-        "points": 25,
-        "category": "math",
-        "difficulty_level": "easy",
-        "teaches": ["math", "visual processing"]
-      },
-      {
-        "task": "Complete 3 therapy-based homework tasks",
-        "description": "Tasks given during speech/OT sessions.",
-        "points": 30,
-        "category": "therapy follow-through",
-        "difficulty_level": "medium",
-        "teaches": ["motor", "memory", "expression"]
-      }
-    ]
+        {
+          "task": "Identify and pronounce 10 sight words",
+          "description": "With or without audio prompts.",
+          "points": 40,
+          "category": "phonics",
+          "difficulty_level": "medium",
+          "teaches": ["phonics", "reading"]
+        },
+        {
+          "task": "Letter discrimination game streak",
+          "description": "Score 3 consecutive wins in letter confusion game.",
+          "points": 30,
+          "category": "letter recognition",
+          "difficulty_level": "medium",
+          "teaches": ["visual processing", "phonics"]
+        },
+        {
+          "task": "Finish a guided reading session",
+          "description": "With visuals, phonics, and minimal adult support.",
+          "points": 35,
+          "category": "reading",
+          "difficulty_level": "medium",
+          "teaches": ["reading", "phonics", "attention"]
+        },
+        {
+          "task": "Solve 10 simple math visual questions",
+          "description": "Completed across 3 sessions.",
+          "points": 25,
+          "category": "math",
+          "difficulty_level": "easy",
+          "teaches": ["math", "visual processing"]
+        },
+        {
+          "task": "Complete 3 therapy-based homework tasks",
+          "description": "Tasks given during speech/OT sessions.",
+          "points": 30,
+          "category": "therapy follow-through",
+          "difficulty_level": "medium",
+          "teaches": ["motor", "memory", "expression"]
+        }
+      ]
     },
-
     "severe": {
       "age_range": "4-12",
       "daily_routine": [
@@ -203,46 +199,47 @@
         "tools_and_tech": ["AAC devices", "Pictogram cards", "Touch-screen learning"]
       },
       "milestone_tasks": [
-      {
-        "task": "Match 5 letters with sounds",
-        "description": "Using visual or audio prompts.",
-        "points": 30,
-        "category": "phonics",
-        "difficulty_level": "easy",
-        "teaches": ["phonics", "visual processing"]
-      },
-      {
-        "task": "Recognize own name in print",
-        "description": "Identify and say their name written on paper.",
-        "points": 20,
-        "category": "letter recognition",
-        "difficulty_level": "easy",
-        "teaches": ["visual processing", "reading"]
-      },
-      {
-        "task": "Touch and name 3 objects correctly",
-        "description": "With support, during game or meal time.",
-        "points": 25,
-        "category": "language comprehension",
-        "difficulty_level": "easy",
-        "teaches": ["language", "communication"]
-      },
-      {
-        "task": "Finish 1 page of a storybook",
-        "description": "With visual cues or assisted reading.",
-        "points": 20,
-        "category": "reading",
-        "difficulty_level": "medium",
-        "teaches": ["reading", "attention", "memory"]
-      },
-      {
-        "task": "Use AAC device for 3 different needs",
-        "description": "e.g., ask for food, express feeling, greet someone.",
-        "points": 40,
-        "category": "communication",
-        "difficulty_level": "medium",
-        "teaches": ["communication", "expression", "social"]
-      }
-    ]
+        {
+          "task": "Match 5 letters with sounds",
+          "description": "Using visual or audio prompts.",
+          "points": 30,
+          "category": "phonics",
+          "difficulty_level": "easy",
+          "teaches": ["phonics", "visual processing"]
+        },
+        {
+          "task": "Recognize own name in print",
+          "description": "Identify and say their name written on paper.",
+          "points": 20,
+          "category": "letter recognition",
+          "difficulty_level": "easy",
+          "teaches": ["visual processing", "reading"]
+        },
+        {
+          "task": "Touch and name 3 objects correctly",
+          "description": "With support, during game or meal time.",
+          "points": 25,
+          "category": "language comprehension",
+          "difficulty_level": "easy",
+          "teaches": ["language", "communication"]
+        },
+        {
+          "task": "Finish 1 page of a storybook",
+          "description": "With visual cues or assisted reading.",
+          "points": 20,
+          "category": "reading",
+          "difficulty_level": "medium",
+          "teaches": ["reading", "attention", "memory"]
+        },
+        {
+          "task": "Use AAC device for 3 different needs",
+          "description": "e.g., ask for food, express feeling, greet someone.",
+          "points": 40,
+          "category": "communication",
+          "difficulty_level": "medium",
+          "teaches": ["communication", "expression", "social"]
+        }
+      ]
     }
   }
+}
