@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { getStoryFromWord } from "./getStoryFromWord";
-import { X } from "lucide-react";
+import { X, Volume2 } from "lucide-react";
 
 const StoryPromptModal = ({ onClose }: { onClose: () => void }) => {
   const [word, setWord] = useState("");
   const [story, setStory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const handleGenerateStory = async () => {
     if (!word.trim()) return;
@@ -20,6 +21,19 @@ const StoryPromptModal = ({ onClose }: { onClose: () => void }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSpeakStory = () => {
+    if (!story) return;
+
+    const utterance = new SpeechSynthesisUtterance(story);
+    utterance.rate = 0.9; 
+    utterance.pitch = 1.1;
+    utterance.lang = "en-US";
+
+    setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    speechSynthesis.speak(utterance);
   };
 
   return (
@@ -50,8 +64,18 @@ const StoryPromptModal = ({ onClose }: { onClose: () => void }) => {
         </button>
 
         {story && (
-          <div className="mt-4 p-3 bg-gray-100 rounded whitespace-pre-line max-h-[300px] overflow-y-auto">
-            {story}
+          <div className="mt-4">
+            <div className="p-3 bg-gray-100 rounded whitespace-pre-line max-h-[300px] overflow-y-auto mb-2">
+              {story}
+            </div>
+            <button
+              onClick={handleSpeakStory}
+              disabled={isSpeaking}
+              className="flex items-center gap-2 text-sm px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700 transition"
+            >
+              <Volume2 className="h-4 w-4" />
+              {isSpeaking ? "Speaking..." : "Speak Aloud"}
+            </button>
           </div>
         )}
       </div>
