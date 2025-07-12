@@ -7,11 +7,14 @@ declare global {
     isGameActive: boolean;
   }
 }
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition: SpeechRecognition | null = null;
 
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 import Home from "./pages/Home";
 import SimulationPage from "./pages/Simulation";
 import ParentsChat from "./pages/ParentsChat";
@@ -21,10 +24,7 @@ import SignupPage from "./pages/Signup";
 import LoginPage from "./pages/Login";
 import ChildModePage from "./pages/Childmode";
 import ChatbotIcon from "./components/Chatboticon";
-import { AppProvider } from "./context/appContext";
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-let recognition: typeof SpeechRecognition | null = null;
 window.isGameActive = false;
 
 const App = () => {
@@ -39,13 +39,14 @@ const App = () => {
     }
 
     recognition = new SpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
 
     recognition.onstart = () => {
       console.log("🎙️ Mic is actively listening");
     };
+
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
     window.pauseVoiceNav = () => {
       try {
@@ -65,42 +66,49 @@ const App = () => {
       }
     };
 
-    recognition.onresult = (event) => {
-      const command = event.results[0][0].transcript.toLowerCase();
-      console.log("🗣️ You said:", command);
-
-      if (command.includes("go home") || command.includes("go back") || command.includes("home")) {
-        window.location.href = "/";
-      } else if (command.includes("start journey") || command.includes("journey")) {
-        document.getElementById("games")?.scrollIntoView({ behavior: "smooth" });
-      } else if (command.includes("log in") || command.includes("login")) {
-        window.location.href = "/login";
-      } else if (command.includes("sign up") || command.includes("signup")) {
-        window.location.href = "/signup";
-      } else if (
-        command.includes("track progress") ||
-        command.includes("progress") ||
-        command.includes("achievement")
-      ) {
-        document.getElementById("progress")?.scrollIntoView({ behavior: "smooth" });
-      } else if (
-        command.includes("child mode") ||
-        command.includes("open child mode") ||
-        command.includes("childmode") ||
-        command.includes("child")
-      ) {
-        window.location.href = "/child-mode";
-      } else if (
-        command.includes("chat assistant") ||
-        command.includes("chatbot") ||
-        command.includes("assistant")
-      ) {
-        document.getElementById("chatbot-icon")?.click();
-      } else {
-        const fail = new SpeechSynthesisUtterance("Sorry, I didn't understand that.");
-        speechSynthesis.speak(fail);
-      }
-    };
+recognition.onresult = (event) => {
+  const command = event.results[0][0].transcript.toLowerCase();
+  console.log("🗣️ You said:", command);
+  if (window.location.pathname === "/child-mode") {
+    if (command.includes("exit") || command.includes("go back")) {
+      window.location.href = "/";
+      return; 
+    }
+  }
+  if (
+    command.includes("go home") || command.includes("go back") ||
+    command.includes("home") || command.includes("go back to home")
+  ) {
+    window.location.href = "/";
+  } else if (
+    command.includes("start journey") || command.includes("journey") ||
+    command.includes("start your journey")
+  ) {
+    document.getElementById("games")?.scrollIntoView({ behavior: "smooth" });
+  } else if (command.includes("log in") || command.includes("login")) {
+    window.location.href = "/login";
+  } else if (command.includes("sign up") || command.includes("signup")) {
+    window.location.href = "/signup";
+  } else if (
+    command.includes("track progress") || command.includes("progress") ||
+    command.includes("achievement") || command.includes("show achievement")
+  ) {
+    document.getElementById("progress")?.scrollIntoView({ behavior: "smooth" });
+  } else if (
+    command.includes("child mode") || command.includes("open child mode") ||
+    command.includes("childmode") || command.includes("child")
+  ) {
+    window.location.href = "/child-mode";
+  } else if (
+    command.includes("chat assistant") || command.includes("chatbot") ||
+    command.includes("open chat assistant") || command.includes("assistant")
+  ) {
+    document.getElementById("chatbot-icon")?.click();
+  } else {
+    const fail = new SpeechSynthesisUtterance("Sorry, I didn't understand that.");
+    speechSynthesis.speak(fail);
+  }
+};
 
     recognition.onend = () => {
       if (!window.isGameActive) {
@@ -129,23 +137,14 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <AppProvider>
-        <AppContentWrapper />
-      </AppProvider>
+      <AppContentWrapper />
     </BrowserRouter>
   );
 };
 
 const AppContentWrapper = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  const hideChatbot =
-    location.pathname === "/child-mode" || location.pathname === "/SimulationPage";
-
-  const handleLoginSuccess = () => {
-    navigate("/personalize");
-  };
+  const hideChatbot = location.pathname === "/child-mode";
 
   return (
     <>
@@ -156,8 +155,8 @@ const AppContentWrapper = () => {
           <Route path="/ParentsChat" element={<ParentsChat />} />
           <Route path="/parents" element={<ParentsSection />} />
           <Route path="/personalize" element={<PersonalizeExperience />} />
-          <Route path="/signup" element={<SignupPage onSignupSuccess={handleLoginSuccess} />} />
-          <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/child-mode" element={<ChildModePage />} />
           <Route path="*" element={<div>404 - Not Found</div>} />
         </Routes>
