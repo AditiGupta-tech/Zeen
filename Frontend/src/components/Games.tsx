@@ -69,23 +69,33 @@ const Games = () => {
       gameType: "art"
     },
     {
-      title: "Color Confusion Game",
-      description: "Identify the display color of a word, not the word itself!",
-      icon: "🌈",
-      color: "from-teal-200 to-teal-300",
-      textColor: "text-teal-800",
-      difficulty: "Tricky",
-      gameType: "colorConfusion"
-    },
-    {
-      title: "Math Quiz",
-      description: "Basic maths concepts like addition, subtraction, multiplication, and division.",
-      icon: "🔢",
-      color: "from-blue-200 to-blue-300",
-      textColor: "text-blue-800",
-      difficulty: "Active",
-      gameType: "movement"
-    },
+  title: "Maths Quiz",
+  description: "Solve fun and quick math problems!",
+  icon: "➕",
+  color: "from-indigo-200 to-indigo-300",
+  textColor: "text-indigo-800",
+  difficulty: "Logical",
+  gameType: "math"
+  },
+  {
+  title: "Color Confusion Game",
+  description: "Identify the display color of a word, not the word itself!",
+  icon: "🌈",
+  color: "from-teal-200 to-teal-300",
+  textColor: "text-teal-800",
+  difficulty: "Tricky",
+  gameType: "colorConfusion"
+  },
+  {
+  title: "Body Movement Games",
+  description: "Dance and move like animals while learning new concepts",
+  icon: "💃",
+  color: "from-blue-200 to-blue-300",
+  textColor: "text-blue-800",
+  difficulty: "Active",
+  gameType: "movement"
+  },
+
     {
       title: "Object Recognition Game",
       description: "Use your webcam to identify objects around you",
