@@ -71,11 +71,22 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
 };
 
   const playIshaan = (message: string) => {
-    const utterance = new SpeechSynthesisUtterance(message);
-    utterance.rate = 0.8;
-    utterance.pitch = 1.2;
-    speechSynthesis.speak(utterance);
-  };
+  const utterance = new SpeechSynthesisUtterance(message);
+  const voices = speechSynthesis.getVoices();
+
+  const indianVoice =
+    voices.find((v) => v.name.includes("Heera") || v.name.includes("Google UK English Female") || v.lang === "en-IN") ||
+    voices.find((v) => v.lang.startsWith("en"));
+
+  if (indianVoice) {
+    utterance.voice = indianVoice;
+  }
+
+  utterance.rate = 0.9; 
+  utterance.pitch = 1.1;
+  speechSynthesis.speak(utterance);
+};
+
 
   const startSpeechRecognition = () => {
     if (!SpeechRecognition) {
@@ -203,10 +214,8 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
   };
 
   const speakWord = () => {
-    const utterance = new SpeechSynthesisUtterance(currentWord);
-    utterance.rate = 0.6;
-    speechSynthesis.speak(utterance);
-  };
+  playIshaan(currentWord);
+};
 
   const initializeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
