@@ -51,13 +51,13 @@ const Games = () => {
       gameType: "confusion"
     },
     {
-      title: "Color Confusion Game",
-      description: "Identify the display color of a word, not the word itself!",
-      icon: "🌈",
-      color: "from-teal-200 to-teal-300",
-      textColor: "text-teal-800",
-      difficulty: "Tricky",
-      gameType: "colorConfusion"
+      title: "Object Matching Game", 
+      description: "Find matching pairs of words and pictures to improve memory!", 
+      icon: "🧠", 
+      color: "from-indigo-200 to-indigo-300", 
+      textColor: "text-indigo-800",
+      difficulty: "Moderate", 
+      gameType: "memoryMatch" 
     },
     {
       title: "Art Therapy",
@@ -69,25 +69,35 @@ const Games = () => {
       gameType: "art"
     },
     {
-      title: "Maths Quiz",
-      description: "Solve fun and quick math problems!",
-      icon: "➕",
-      color: "from-indigo-200 to-indigo-300",
-      textColor: "text-indigo-800",
-      difficulty: "Logical",
-      gameType: "math"
-    },
+  title: "Maths Quiz",
+  description: "Solve fun and quick math problems!",
+  icon: "➕",
+  color: "from-indigo-200 to-indigo-300",
+  textColor: "text-indigo-800",
+  difficulty: "Logical",
+  gameType: "math"
+  },
+  {
+  title: "Color Confusion Game",
+  description: "Identify the display color of a word, not the word itself!",
+  icon: "🌈",
+  color: "from-teal-200 to-teal-300",
+  textColor: "text-teal-800",
+  difficulty: "Tricky",
+  gameType: "colorConfusion"
+  },
+  {
+  title: "Body Movement Games",
+  description: "Dance and move like animals while learning new concepts",
+  icon: "💃",
+  color: "from-blue-200 to-blue-300",
+  textColor: "text-blue-800",
+  difficulty: "Active",
+  gameType: "movement"
+  },
+
     {
-      title: "Body Movement Games",
-      description: "Dance and move like animals while learning new concepts",
-      icon: "💃",
-      color: "from-blue-200 to-blue-300",
-      textColor: "text-blue-800",
-      difficulty: "Active",
-      gameType: "movement"
-    },
-    {
-      title: "Object Recognition",
+      title: "Object Recognition Game",
       description: "Use your webcam to identify objects around you",
       icon: "📷",
       color: "from-purple-200 to-purple-300",
@@ -97,7 +107,9 @@ const Games = () => {
     }
   ];
 
-  const handlePlayGame = (gameType: string) => {
+   const handlePlayGame = (gameType: string) => {
+    window.isGameActive=true;
+    if (window.pauseVoiceNav) window.pauseVoiceNav();  
     setActiveGame(gameType);
   };
 
@@ -128,7 +140,7 @@ const Games = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {games.map((game, index) => (
             <Card 
               key={index}
@@ -186,9 +198,13 @@ const Games = () => {
       </div>
       
       {activeGame && (
-        <GameModal 
-          gameType={activeGame} 
-          onClose={() => setActiveGame(null)} 
+        <GameModal
+          gameType={activeGame}
+          onClose={() => {
+            setActiveGame(null);
+            window.isGameActive=false;
+            if (window.resumeVoiceNav) window.resumeVoiceNav(); 
+          }}
         />
       )}
     </section>

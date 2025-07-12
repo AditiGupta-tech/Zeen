@@ -1,0 +1,248 @@
+{
+  "schedule": {
+    "mild": {
+      "age_range": "4-12",
+      "daily_routine": [
+        { "time": "07:00", "activity": "Wake up, hygiene, and light stretching" },
+        { "time": "07:30", "activity": "Breakfast - high protein, low sugar" },
+        { "time": "08:00", "activity": "15 mins of Word Puzzle or Spelling Bee (5-7 questions)" },
+        { "time": "08:30", "activity": "School / Formal Learning (with teacher awareness)" },
+        { "time": "12:30", "activity": "Lunch + 20 min rest" },
+        { "time": "13:30", "activity": "Reading Practice (20 mins with audio support)" },
+        { "time": "14:00", "activity": "Maths Quiz (10 questions - simple + fun)" },
+        { "time": "14:30", "activity": "Break - Outdoor play (motor skill dev)" },
+        { "time": "15:30", "activity": "Games: Object Matching or Letter Sound Game (15 mins)" },
+        { "time": "16:00", "activity": "Snack time" },
+        { "time": "16:30", "activity": "Homework or Revision (with assistive tech)" },
+        { "time": "17:30", "activity": "Pronunciation practice using app/audio (10 words)" },
+        { "time": "18:00", "activity": "Relaxation - music / guided meditation (10 mins)" },
+        { "time": "18:30", "activity": "Dinner with family" },
+        { "time": "19:30", "activity": "Story time (audiobook or assisted reading - 15 mins)" },
+        { "time": "20:00", "activity": "Prepare for bed - brush, calm routine" },
+        { "time": "20:30", "activity": "Sleep" }
+      ],
+      "therapy_appointments": {
+        "speech_therapy": "Once per week (30 mins)",
+        "occupational_therapy": "Optional - motor skills if needed (bi-weekly)",
+        "counseling": "Only if anxiety or school distress present"
+      },
+      "game_recommendations": {
+        "pronunciation_game": "10 words/day",
+        "letter_confusion_game": "7 rounds/day",
+        "maths_quiz": "10 Qs/day",
+        "object_matching_game": "15 mins/day",
+        "spell_check_game": "5 words/day"
+      },
+      "school_customization": {
+        "teacher_support": "Allow oral answers, use visuals, extra time in class",
+        "tools_and_tech": ["Text-to-speech software", "Spell check extensions"]
+      },
+  "milestone_tasks": [
+      {
+        "task": "Read a short story independently",
+        "description": "Child reads a 5-10 sentence story without help.",
+        "points": 50,
+        "category": "reading",
+        "difficulty_level": "hard",
+        "teaches": ["reading", "attention", "memory"]
+      },
+      {
+        "task": "Complete 3 spelling quizzes in a week",
+        "description": "Finish spelling challenges with 80%+ accuracy.",
+        "points": 40,
+        "category": "spelling",
+        "difficulty_level": "medium",
+        "teaches": ["spelling", "memory", "phonics"]
+      },
+      {
+        "task": "Pronounce 20 new words correctly",
+        "description": "Accurate pronunciation over the span of a week.",
+        "points": 30,
+        "category": "phonics",
+        "difficulty_level": "medium",
+        "teaches": ["phonics", "expression"]
+      },
+      {
+        "task": "Finish 5 math quizzes",
+        "description": "Each quiz with at least 8/10 score.",
+        "points": 30,
+        "category": "math",
+        "difficulty_level": "medium",
+        "teaches": ["math", "attention", "memory"]
+      },
+      {
+        "task": "Story retelling activity",
+        "description": "Retell a familiar story in own words with visual prompts.",
+        "points": 25,
+        "category": "language expression",
+        "difficulty_level": "hard",
+        "teaches": ["language", "expression", "memory"]
+      }
+    ]
+}
+
+    },
+
+    "moderate": {
+      "age_range": "4-12",
+      "daily_routine": [
+        { "time": "07:00", "activity": "Wake up & sensory-friendly hygiene routine" },
+        { "time": "07:45", "activity": "Breakfast with verbal instructions" },
+        { "time": "08:15", "activity": "Pronunciation Game (3-5 words)" },
+        { "time": "08:30", "activity": "School / Special Ed sessions (1-on-1 or small group)" },
+        { "time": "12:30", "activity": "Lunch + 30 min rest (quiet zone)" },
+        { "time": "13:30", "activity": "Reading Practice (15 mins with visuals + phonics)" },
+        { "time": "14:00", "activity": "Letter Confusion Game (3 rounds)" },
+        { "time": "14:30", "activity": "Break - outdoor movement / sensory play" },
+        { "time": "15:30", "activity": "Maths Quiz (5 simple Qs with visual aid)" },
+        { "time": "16:00", "activity": "Snack + social chit-chat with family" },
+        { "time": "16:30", "activity": "Homework with support / tutoring (20 mins)" },
+        { "time": "17:00", "activity": "Games: Object Matching + Letter Sounds (15 mins)" },
+        { "time": "17:30", "activity": "Rest time / coloring / creative expression" },
+        { "time": "18:00", "activity": "Dinner with conversation prompts" },
+        { "time": "19:00", "activity": "Story time - 10 mins assisted or narrated" },
+        { "time": "19:30", "activity": "Calm-down routine: warm bath, soft lighting" },
+        { "time": "20:00", "activity": "Sleep" }
+      ],
+      "therapy_appointments": {
+        "speech_therapy": "2 times/week (30–45 mins)",
+        "occupational_therapy": "1–2 times/week (focus on fine motor & sensory)",
+        "counseling": "1 time/week (confidence building, frustration support)"
+      },
+      "game_recommendations": {
+        "pronunciation_game": "5 words/day",
+        "letter_confusion_game": "3 rounds/day",
+        "maths_quiz": "5 Qs/day",
+        "object_matching_game": "10 mins/day",
+        "spell_check_game": "2-3 words/day"
+      },
+      "school_customization": {
+        "teacher_support": "Use phonics-based materials, one instruction at a time",
+        "tools_and_tech": ["Phonics apps", "Tablet with audio books"]
+      },
+      "milestone_tasks": [
+      {
+        "task": "Identify and pronounce 10 sight words",
+        "description": "With or without audio prompts.",
+        "points": 40,
+        "category": "phonics",
+        "difficulty_level": "medium",
+        "teaches": ["phonics", "reading"]
+      },
+      {
+        "task": "Letter discrimination game streak",
+        "description": "Score 3 consecutive wins in letter confusion game.",
+        "points": 30,
+        "category": "letter recognition",
+        "difficulty_level": "medium",
+        "teaches": ["visual processing", "phonics"]
+      },
+      {
+        "task": "Finish a guided reading session",
+        "description": "With visuals, phonics, and minimal adult support.",
+        "points": 35,
+        "category": "reading",
+        "difficulty_level": "medium",
+        "teaches": ["reading", "phonics", "attention"]
+      },
+      {
+        "task": "Solve 10 simple math visual questions",
+        "description": "Completed across 3 sessions.",
+        "points": 25,
+        "category": "math",
+        "difficulty_level": "easy",
+        "teaches": ["math", "visual processing"]
+      },
+      {
+        "task": "Complete 3 therapy-based homework tasks",
+        "description": "Tasks given during speech/OT sessions.",
+        "points": 30,
+        "category": "therapy follow-through",
+        "difficulty_level": "medium",
+        "teaches": ["motor", "memory", "expression"]
+      }
+    ]
+    },
+
+    "severe": {
+      "age_range": "4-12",
+      "daily_routine": [
+        { "time": "07:30", "activity": "Wake up with calm music & visual schedule" },
+        { "time": "08:00", "activity": "Hygiene routine with picture cues" },
+        { "time": "08:30", "activity": "Breakfast with one-step prompts" },
+        { "time": "09:00", "activity": "1 simple Word Game (1 word or sound)" },
+        { "time": "09:15", "activity": "Therapy session / Home Schooling (short bursts)" },
+        { "time": "11:00", "activity": "Break - tactile play or nature walk" },
+        { "time": "12:00", "activity": "Lunch with texture-friendly options" },
+        { "time": "12:45", "activity": "Rest - lying down or quiet music (30 mins)" },
+        { "time": "13:30", "activity": "Letter Matching / Phonics (5-10 mins only)" },
+        { "time": "14:00", "activity": "Maths Quiz (1–2 visual questions)" },
+        { "time": "14:30", "activity": "Break - water play / fidget tools" },
+        { "time": "15:30", "activity": "Story time with visuals (5 mins or 1 page)" },
+        { "time": "16:00", "activity": "Snack time + object naming game (2 items)" },
+        { "time": "16:30", "activity": "Rest or visual memory game (2–3 cards)" },
+        { "time": "17:00", "activity": "Therapy support or parent-child bonding activity" },
+        { "time": "18:00", "activity": "Dinner with visual food chart" },
+        { "time": "19:00", "activity": "Calming routine - soft toy, dim lights" },
+        { "time": "19:30", "activity": "Sleep" }
+      ],
+      "therapy_appointments": {
+        "speech_therapy": "3 times/week (30–45 mins)",
+        "occupational_therapy": "2–3 times/week (sensory integration + ADLs)",
+        "counseling": "2 times/week (emotional regulation, self-expression)"
+      },
+      "game_recommendations": {
+        "pronunciation_game": "1-2 words/day",
+        "letter_confusion_game": "1 round with visual support",
+        "maths_quiz": "1-2 Qs/day",
+        "object_matching_game": "5 mins/day",
+        "spell_check_game": "1 word with cue card"
+      },
+      "school_customization": {
+        "teacher_support": "1-on-1 learning support, visual timetables, minimal writing",
+        "tools_and_tech": ["AAC devices", "Pictogram cards", "Touch-screen learning"]
+      },
+      "milestone_tasks": [
+      {
+        "task": "Match 5 letters with sounds",
+        "description": "Using visual or audio prompts.",
+        "points": 30,
+        "category": "phonics",
+        "difficulty_level": "easy",
+        "teaches": ["phonics", "visual processing"]
+      },
+      {
+        "task": "Recognize own name in print",
+        "description": "Identify and say their name written on paper.",
+        "points": 20,
+        "category": "letter recognition",
+        "difficulty_level": "easy",
+        "teaches": ["visual processing", "reading"]
+      },
+      {
+        "task": "Touch and name 3 objects correctly",
+        "description": "With support, during game or meal time.",
+        "points": 25,
+        "category": "language comprehension",
+        "difficulty_level": "easy",
+        "teaches": ["language", "communication"]
+      },
+      {
+        "task": "Finish 1 page of a storybook",
+        "description": "With visual cues or assisted reading.",
+        "points": 20,
+        "category": "reading",
+        "difficulty_level": "medium",
+        "teaches": ["reading", "attention", "memory"]
+      },
+      {
+        "task": "Use AAC device for 3 different needs",
+        "description": "e.g., ask for food, express feeling, greet someone.",
+        "points": 40,
+        "category": "communication",
+        "difficulty_level": "medium",
+        "teaches": ["communication", "expression", "social"]
+      }
+    ]
+    }
+  }

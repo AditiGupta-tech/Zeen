@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { Card } from "./Card";
 import { Button } from "./Button";
@@ -67,9 +68,11 @@ const ProgressSection = () => {
               ))}
             </div>
             <div className="mt-8 text-center">
+              <Link to="/personalize">
               <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-full">
                 View Detailed Report <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
+              </Link>
             </div>
           </Card>
 
@@ -94,12 +97,14 @@ const ProgressSection = () => {
               ))}
             </div>
             <div className="mt-8 text-center">
+              <Link to="/personalize">
               <Button
                 variant="outline"
                 className="border-orange-500 text-orange-600 hover:bg-orange-50 px-6 py-3 rounded-full"
               >
                 See All Achievements
               </Button>
+              </Link>
             </div>
           </Card>
         </div>
@@ -121,18 +126,22 @@ const ProgressSection = () => {
                 <p className="text-sm text-gray-700 mb-4">
                   Monitor your child's progress, set goals, and celebrate achievements together.
                 </p>
+                <Link to="/personalize">
                 <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white">
                   Access Parent Portal
                 </Button>
+                </Link>
               </Card>
               <Card className="p-6 bg-white/60 border-none">
                 <h4 className="font-bold text-green-800 mb-3">Therapist Dashboard</h4>
                 <p className="text-sm text-gray-700 mb-4">
                   Track skills development and assign targeted therapeutic tasks.
                 </p>
+                <Link to="/personalize">
                 <Button size="sm" className="bg-green-500 hover:bg-green-600 text-white">
                   Therapist Login
                 </Button>
+                </Link>
               </Card>
             </div>
           </Card>
