@@ -6,16 +6,6 @@ import { X, Volume2, Check, ArrowLeft, Paintbrush, Eraser, Redo2, Undo2 } from "
 import { useState, useRef, useEffect, useCallback } from "react";
 import MemoryGameCard from "./MemoryGameCard";
 
-declare global {
-  interface Window {
-    webkitSpeechRecognition: any;
-    SpeechRecognition: any;
-  }
-
-  interface SpeechRecognitionEvent extends Event {
-    results: SpeechRecognitionResultList;
-  }
-}
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 interface GameModalProps {
   gameType: string;
@@ -877,6 +867,22 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
 
           </div>
         );
+
+        case "objectRecognition":
+          return (
+            <div>
+              <h2>Debug: Object Recognition Game</h2>
+              <ObjectRecognitionGame
+                onScore={() => {
+                  setScore((prev) => prev + 1);
+                  playBindaasAudio();
+                }}
+                onClose={onClose}
+              />
+            </div>
+          );
+
+
 
       default:
         return (
