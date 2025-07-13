@@ -51,13 +51,13 @@ const Games = () => {
       gameType: "confusion"
     },
     {
-      title: "Object Matching Game", 
-      description: "Find matching pairs of words and pictures to improve memory!", 
-      icon: "🧠", 
-      color: "from-indigo-200 to-indigo-300", 
-      textColor: "text-indigo-800",
-      difficulty: "Moderate", 
-      gameType: "memoryMatch" 
+      title: "Color Confusion Game",
+      description: "Identify the display color of a word, not the word itself!",
+      icon: "🌈",
+      color: "from-teal-200 to-teal-300",
+      textColor: "text-teal-800",
+      difficulty: "Tricky",
+      gameType: "colorConfusion"
     },
     {
       title: "Art Therapy",
@@ -69,31 +69,40 @@ const Games = () => {
       gameType: "art"
     },
     {
-      title: "Color Confusion Game",
-      description: "Identify the display color of a word, not the word itself!",
-      icon: "🌈",
-      color: "from-teal-200 to-teal-300",
-      textColor: "text-teal-800",
-      difficulty: "Tricky",
-      gameType: "colorConfusion"
+      title: "Object Matching Game", 
+      description: "Find matching pairs of words and pictures to improve memory!", 
+      icon: "🧠", 
+      color: "from-indigo-200 to-indigo-300", 
+      textColor: "text-indigo-800",
+      difficulty: "Moderate", 
+      gameType: "memoryMatch" 
     },
     {
-      title: "Math Quiz",
-      description: "Basic maths concepts like addition, subtraction, multiplication, and division.",
-      icon: "🔢",
+      title: "Body Movement Games",
+      description: "Dance and move like animals while learning new concepts",
+      icon: "💃",
       color: "from-blue-200 to-blue-300",
       textColor: "text-blue-800",
       difficulty: "Active",
       gameType: "movement"
     },
     {
-      title: "Object Recognition Game",
+      title: "Object Recognition",
       description: "Use your webcam to identify objects around you",
       icon: "📷",
       color: "from-purple-200 to-purple-300",
       textColor: "text-purple-800",
       difficulty: "Interactive",
       gameType: "recognition"
+    },
+    {
+      title: "Yoga Challenges",
+      description: "Fun yoga poses and mindfulness exercises for kids",
+      icon: "🧘‍♀️",
+      color: "from-pink-200 to-pink-300",
+      textColor: "text-pink-800",
+      difficulty: "Calm",
+      gameType: "yoga"
     }
   ];
 
@@ -130,7 +139,7 @@ const Games = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {games.map((game, index) => (
             <Card 
               key={index}
