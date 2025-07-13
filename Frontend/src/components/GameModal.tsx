@@ -5,7 +5,19 @@ import { Mic } from "lucide-react";
 import { X, Volume2, Check, ArrowLeft, Paintbrush, Eraser, Redo2, Undo2 } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import MemoryGameCard from "./MemoryGameCard";
+import ObjectRecognitionGame from "./ObjectRecognitionGame";
 
+
+declare global {
+  interface Window {
+    webkitSpeechRecognition: any;
+    SpeechRecognition: any;
+  }
+
+  interface SpeechRecognitionEvent extends Event {
+    results: SpeechRecognitionResultList;
+  }
+}
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 interface GameModalProps {
   gameType: string;
@@ -94,13 +106,30 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     { name: "Black", hex: "#000000", emoji: '⚫' },
     { name: "White", hex: "#FFFFFF", emoji: '⚪', textColor: "#000000" },
   ];
+  const playBindaasAudio = () => {
+  const audio = new Audio('/bindaasAudio.mp3');
+  audio.play().catch((error) => {
+    console.error("Audio play failed:", error);
+  });
+};
 
   const playIshaan = (message: string) => {
-    const utterance = new SpeechSynthesisUtterance(message);
-    utterance.rate = 0.8;
-    utterance.pitch = 1.2;
-    speechSynthesis.speak(utterance);
-  };
+  const utterance = new SpeechSynthesisUtterance(message);
+  const voices = speechSynthesis.getVoices();
+
+  const indianVoice =
+    voices.find((v) => v.name.includes("Heera") || v.name.includes("Google UK English Female") || v.lang === "en-IN") ||
+    voices.find((v) => v.lang.startsWith("en"));
+
+  if (indianVoice) {
+    utterance.voice = indianVoice;
+  }
+
+  utterance.rate = 0.9; 
+  utterance.pitch = 1.1;
+  speechSynthesis.speak(utterance);
+};
+
 
   const startSpeechRecognition = () => {
     if (!SpeechRecognition) {
@@ -125,7 +154,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
 
       if (correct) {
         setScore(score + 1);
-        playIshaan("Ekdum Jhakaas! Perfect!");
+        playBindaasAudio();
       } else {
         playIshaan("Try again!");
       }
@@ -149,7 +178,19 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     if (gameType === "colorConfusion") {
       const correctColorName = colorWords.find(color => color.hex === displayedColor)?.name;
       correct = userInput.toUpperCase() === correctColorName;
-    } else {
+    }else if (gameType === "math") {
+      try {
+        const [num1, operator, num2] = currentWord.split(" ");
+        const answer = parseInt(userInput);
+        const expected =
+          operator === "+" ? +num1 + +num2 :
+          operator === "-" ? +num1 - +num2 :
+          operator === "x" ? +num1 * +num2 : NaN;
+        correct = answer === expected;
+      } catch {
+        correct = false;
+      }
+    }else {
       correct = userInput.toUpperCase() === currentWord;
     }
 
@@ -157,7 +198,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
 
     if (correct) {
       setScore(score + 1);
-      playIshaan("Ekdum Jhakaas! Well done!");
+      playBindaasAudio();
       setTimeout(() => {
         generateNewWord();
         setIsCorrect(null);
@@ -169,8 +210,10 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
         setIsCorrect(null);
       }, 2000);
     }
+    
   };
 
+  
   const generateNewWord = () => {
     if (gameType === "colorConfusion") {
       const randomWordObj = colorWords[Math.floor(Math.random() * colorWords.length)];
@@ -180,9 +223,17 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
         randomDisplayColorObj = colorWords[Math.floor(Math.random() * colorWords.length)];
       }
 
-      setCurrentWord(randomWordObj.name); 
-      setDisplayedColor(randomDisplayColorObj.hex); 
+      setCurrentWord(randomWordObj.name);
+      setDisplayedColor(randomDisplayColorObj.hex);
       playIshaan("What color is the word displayed in?");
+    } else if (gameType === "math") {
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+      const ops = ["+", "-", "x"];
+      const operator = ops[Math.floor(Math.random() * ops.length)];
+      const question = `${num1} ${operator} ${num2}`;
+      setCurrentWord(question);
+      playIshaan(`What is ${num1} ${operator === 'x' ? "times" : operator === '+' ? "plus" : "minus"} ${num2}?`);
     } else {
       const wordList = words[gameType as keyof typeof words] || words.spelling;
       const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
@@ -196,6 +247,8 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
       playIshaan("Let's start! Listen carefully and spell the word.");
     } else if (gameType === "colorConfusion") {
       playIshaan("Let's start! Tell me the color of the word you see.");
+    } else if (gameType === "math") {
+      playIshaan("Let's begin solving math problems!");
     } else if (gameType === "art") {
       playIshaan("Welcome to Art Therapy! Let your creativity flow!");
     } else {
@@ -204,10 +257,8 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
   };
 
   const speakWord = () => {
-    const utterance = new SpeechSynthesisUtterance(currentWord);
-    utterance.rate = 0.6;
-    speechSynthesis.speak(utterance);
-  };
+  playIshaan(currentWord);
+};
 
   const initializeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
@@ -542,7 +593,50 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
             )}
           </div>
         );
+      case "math":
+    return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h3 className="text-2xl font-bold text-pink-800 mb-4">Math Quiz Game</h3>
+        <p className="text-gray-600 mb-4">Addition, subtraction, multiplication and division made fun!</p>
+        <span className="text-6xl mb-4">🧠</span>
+      </div>
 
+      {currentWord ? (
+        <div className="space-y-4">
+          <div className="text-center text-3xl font-bold text-pink-700">
+            {currentWord}
+          </div>
+
+          <Input
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            placeholder="Type your answer..."
+            className="text-center text-lg"
+            onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          />
+
+          <div className="text-center">
+            <Button
+              onClick={checkAnswer}
+              className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full"
+            >
+              Check Answer
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center">
+          <Button
+            onClick={startGame}
+            className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-full text-lg"
+          >
+            Start Game
+          </Button>
+        </div>
+      )}
+    </div>
+  );
       case "confusion":
         return (
           <div className="space-y-6">
@@ -786,6 +880,22 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
           </div>
         );
 
+        case "objectRecognition":
+          return (
+            <div>
+              <h2>Debug: Object Recognition Game</h2>
+              <ObjectRecognitionGame
+                onScore={() => {
+                  setScore((prev) => prev + 1);
+                  playBindaasAudio();
+                }}
+                onClose={onClose}
+              />
+            </div>
+          );
+
+
+
       default:
         return (
           <div className="text-center">
@@ -824,7 +934,7 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
               {isCorrect ? (
                 <div className="flex items-center justify-center gap-2">
                   <Check className="h-5 w-5" />
-                  <span className="font-bold">Ekdum Jhakaas! 🌟</span>
+                  <span className="font-bold">Bindaas! 🌟</span>
                 </div>
               ) : (
                 <span className="font-bold">Try again! You can do it! 💪</span>
@@ -848,4 +958,6 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
   );
 };
 
+
 export default GameModal;
+
