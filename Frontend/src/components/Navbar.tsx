@@ -13,7 +13,12 @@ const Navigation = () => {
           <div className="flex items-center h-16">
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">Z</span>
+                <img
+  src="/logo.png"
+  alt="Zeen Logo"
+  className="w-12 aspect-square rounded-full object-cover"
+/>
+
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-blue-500 bg-clip-text text-transparent">
                 Zeen
