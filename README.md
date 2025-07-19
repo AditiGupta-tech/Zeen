@@ -59,29 +59,29 @@ Follow these steps to get the Zeen project up and running on your local machine.
 
 First, clone the project from GitHub to your local machine using the following command:
 
-  ```
-  git clone [https://github.com/YourUser/zeen.git](https://github.com/YourUser/zeen.git)
-  ```
+```
+git clone [https://github.com/YourUser/zeen.git](https://github.com/YourUser/zeen.git)
+```
 
 2. **Install dependencies**
-   ``` 
-   npm install
-   ```
+``` 
+npm install
+```
 
 3. **Environment Variables**
 
-  ```
-  VITE_GEMINI_API_KEY=your_api_key
-  PORT=3000
-  JWT_SECRET=your_jwt_secret
-  MONGODB_URI=mongodb+srv://username:password@clusterName.xxxxxx.mongodb.net/retryWrites=true&w=majority
-  FRONTEND_URL=http://localhost:5173
-  ```
+```
+VITE_GEMINI_API_KEY=your_api_key
+PORT=3000
+JWT_SECRET=your_jwt_secret
+MONGODB_URI=mongodb+srv://username:password@clusterName.xxxxxx.mongodb.net/retryWrites=true&w=majority
+FRONTEND_URL=http://localhost:5173
+```
 
 4. **Run the website**
-   ```
-   npm run dev
-   ```
+```
+npm run dev
+```
 
 ---
 
@@ -91,4 +91,3 @@ First, clone the project from GitHub to your local machine using the following c
 ---
 
 Made with love and boundless empathy by **Team Zeen** ❤️
-
