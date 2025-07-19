@@ -206,4 +206,29 @@ router.get('/profile', authMiddleware, async (req: AuthenticatedRequest, res: Re
     }
 });
 
+router.put('/profile', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: 'User not authenticated.' });
+    }
+
+    const updatedFields = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      updatedFields,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    res.status(500).json({ message: 'Failed to update profile.', error: (error as Error).message });
+  }
+});
+
 export default router;
