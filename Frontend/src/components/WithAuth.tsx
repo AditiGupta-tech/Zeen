@@ -70,7 +70,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
       }
 
       try {
-        const res = await fetch('/api/profile', {
+        const res = await fetch('https://zeen-1nln.onrender.com/api/profile', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ export default function WithAuth({ onLogout }: WithAuthProps) {
     };
 
     try {
-      const res = await fetch('/api/profile', {
+      const res = await fetch('https://zeen-1nln.onrender.com/api/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
