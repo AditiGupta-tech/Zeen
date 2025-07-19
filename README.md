@@ -39,7 +39,7 @@ Parents of dyslexic children are bombarded with fragmented information, expensiv
 
 | Layer | Tech |
 | ----- | ---- |
-| **frontend** | Vite • Tailwind CSS |
+| **frontend** | Vite • TypeScript • Tailwind CSS |
 | **Backend** | Node.js • Express • MongoDB Atlas |
 | **Voice & AI** | GeminiAI API • Speech‑to‑Text API |
 | **Auth & Security** | JWT • bcryptjs |
