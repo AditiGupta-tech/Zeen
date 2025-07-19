@@ -268,7 +268,7 @@ export default function SignupPage() {
 
       console.log('Sending signup data:', JSON.stringify(dataToSubmit, null, 2));
 
-      const response = await fetch('${import.meta.env.VITE_API_BASE_URL}/api/signup', {
+      const response = await fetch('https://zeen-1nln.onrender.com/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
