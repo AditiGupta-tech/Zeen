@@ -11,10 +11,15 @@ const app: Application = express();
 // Connect to DB
 connectToDB();
 
+const allowedOrigins: (string | RegExp | boolean)[] = [
+  process.env.FRONTEND_URL || '',
+  'http://localhost:5173',
+];
+
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*', 
+  origin: allowedOrigins, 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
