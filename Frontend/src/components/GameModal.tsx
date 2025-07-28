@@ -72,14 +72,14 @@ const GameModal = ({ gameType, onClose }: GameModalProps) => {
     pronunciation: ["WONDERFUL", "BEAUTIFUL", "AMAZING", "FANTASTIC", "BRILLIANT"],
     confusion: ["BAD", "DAD", "BED", "DIG", "PIG"],
     memoryMatchPairs: [
-      { word: "BALL", image: "/public/ball.jpg" },
-      { word: "HAT", image: "/public/hat.jpg" },
-      { word: "CAT", image: "/public/cat.jpg" },
-      { word: "FISH", image: "/public/fish.jpg" },
-      { word: "BOOK", image: "/public/book.png" }, 
-      { word: "APPLE", image: "/public/apple.jpg" },
-      { word: "DOG", image: "/public/dog.jpg" },
-      { word: "MAN", image: "/public/man.jpg" }
+      { word: "BALL", image: "/ball.jpg" },
+      { word: "HAT", image: "/hat.jpg" },
+      { word: "CAT", image: "/cat.jpg" },
+      { word: "FISH", image: "/fish.jpg" },
+      { word: "BOOK", image: "/book.png" }, 
+      { word: "APPLE", image: "/apple.jpg" },
+      { word: "DOG", image: "/dog.jpg" },
+      { word: "MAN", image: "/man.jpg" }
     ]
   };
 
