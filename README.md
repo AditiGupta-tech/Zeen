@@ -90,4 +90,4 @@ npm run dev
 
 ---
 
-Made with love and boundless empathy by **Team Zeen** ❤️
+Made with love and boundless empathy by **Team Heuristics** ❤️
